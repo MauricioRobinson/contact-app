@@ -5,11 +5,10 @@ module.exports = {
     es2021: true,
   },
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: "latest",
   },
   rules: {
-    semi: ['error', 'always'],
-    quotes: ['error', 'single'],
+    semi: ["error", "always"],
+    quotes: ["error", "double"],
   },
 };
-
