@@ -1,4 +1,4 @@
-const boom = require("@hapi/boom");
+const boom = require('@hapi/boom');
 
 function validatorHandler(shcema, property) {
   return (req, res, next) => {

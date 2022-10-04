@@ -1,35 +1,35 @@
-const express = require("express");
+const express = require('express');
 // const routerApi = require('./routes');
-const cors = require("cors");
-const helmet = require("helmet");
+const cors = require('cors');
+const helmet = require('helmet');
 
 const {
   logErrors,
   errorHandler,
   boomErrorHandler,
   ormErrorHandler,
-} = require("./middlewares/error.handler");
+} = require('./middlewares/error.handler');
 
 const port = process.env.PORT || 8080;
 const app = express();
 
 app.use(express.json());
 
-const whiteList = ["http://localhost:3000"];
+const whiteList = ['http://localhost:3000'];
 const options = {
   origin: (origin, callback) => {
     if (whiteList.includes(origin) || !origin) {
       callback(null, true);
     } else {
-      callback(new Error("Acceso no permitido"));
+      callback(new Error('Acceso no permitido'));
     }
   },
 };
 app.use(cors(options));
 app.use(helmet());
 
-app.get("/", (req, res) => {
-  res.send("Homepage view");
+app.get('/', (req, res) => {
+  res.send('Homepage view');
 });
 
 // routerApi(app);
@@ -41,5 +41,5 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log("Express server running on port " + port + "👍");
+  console.log('Express server running on port ' + port + '👍');
 });
