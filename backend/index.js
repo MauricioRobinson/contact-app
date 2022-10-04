@@ -3,12 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
-// const {
-//   logErrors,
-//   errorHandler,
-//   boomErrorHandler,
-//   ormErrorHandler,
-// } = require('./middlewares/error.handler');
+const {
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+  ormErrorHandler,
+} = require("./middlewares/error.handler");
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -34,11 +34,11 @@ app.get("/", (req, res) => {
 
 // routerApi(app);
 
-//Using custom middlewares
-// app.use(logErrors);
-// app.use(ormErrorHandler);
-// app.use(boomErrorHandler);
-// app.use(errorHandler);
+// Using custom middlewares
+app.use(logErrors);
+app.use(ormErrorHandler);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log("Express server running on port " + port + "👍");
