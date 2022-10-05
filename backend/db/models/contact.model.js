@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
-const CONTACT_TABLE = 'contacts';
+const CONTACT_TABLE = 'Contacts';
 
 const ContactSchema = {
   id: {
@@ -67,7 +67,7 @@ const ContactSchema = {
 class Contact extends Model {
   static associate() {}
 
-  static setup(sequelize) {
+  static config(sequelize) {
     return {
       sequelize,
       tableName: CONTACT_TABLE,

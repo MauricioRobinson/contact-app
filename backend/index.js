@@ -1,5 +1,5 @@
 const express = require('express');
-// const routerApi = require('./routes');
+const routerApi = require('./routes');
 const cors = require('cors');
 const helmet = require('helmet');
 
@@ -28,11 +28,11 @@ const options = {
 app.use(cors(options));
 app.use(helmet());
 
-app.get('/', (req, res) => {
-  res.send('Homepage view');
-});
+// app.get('/', (req, res) => {
+//   res.send('Homepage view');
+// });
 
-// routerApi(app);
+routerApi(app);
 
 // Using custom middlewares
 app.use(logErrors);
