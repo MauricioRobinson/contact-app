@@ -5,8 +5,8 @@ const helmet = require('helmet');
 
 const {
   logErrors,
-  errorHandler,
   boomErrorHandler,
+  errorHandler,
   ormErrorHandler,
 } = require('./middlewares/error.handler');
 
