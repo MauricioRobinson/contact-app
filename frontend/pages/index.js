@@ -1,9 +1,7 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import Home from '../components/Home';
-import styles from '../styles/Home.module.css';
 
-export default function App() {
+export default function App({ contacts }) {
   return (
     <>
       <Head>
@@ -16,10 +14,27 @@ export default function App() {
 
       <main>
         <section>
-          <Home />
+          <Home data={contacts} />
         </section>
       </main>
     </>
   );
+}
+
+export async function loadContacts() {
+  const getData = await fetch('http:/localhost:8080/api/v1/contacts');
+  const contacts = await getData.json();
+
+  return contacts;
+}
+
+export async function getStaticProps() {
+  const contacts = await loadContacts();
+
+  return {
+    props: {
+      contacts,
+    },
+  };
 }
 
