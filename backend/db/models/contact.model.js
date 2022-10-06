@@ -14,7 +14,7 @@ const ContactSchema = {
   },
   firstName: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     field: 'first_name',
     validate: {
       is: /^[a-z]+$/i,
@@ -32,6 +32,7 @@ const ContactSchema = {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
     validate: {
       isEmail: true,
     },
@@ -40,9 +41,6 @@ const ContactSchema = {
     type: DataTypes.STRING,
     allowNull: false,
     field: 'phone_number',
-    validate: {
-      is: /^[0-9]+$/,
-    },
   },
   createdAt: {
     field: 'created_at',

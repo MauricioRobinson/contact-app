@@ -10,6 +10,7 @@ function errorHandler(err, req, res, next) {
     message: err.message,
     stack: err.stack,
   });
+
   next(err);
 }
 
@@ -18,6 +19,7 @@ function boomErrorHandler(err, req, res, next) {
     const { output } = err;
     res.status(output.statusCode).json(output.payload);
   }
+
   next(err);
 }
 
@@ -27,11 +29,11 @@ function ormErrorHandler(err, req, res, next) {
       statusCode: 409,
       message: err.name,
       errors: err.errors,
-      detail: error.parent.detail,
+      detail: err.parent.detail,
       table: err.parent.table,
     });
   }
   next(err);
 }
 
-module.exports = { logErrors, boomErrorHandler, errorHandler, ormErrorHandler };
+module.exports = { logErrors, errorHandler, boomErrorHandler, ormErrorHandler };

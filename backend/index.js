@@ -28,10 +28,6 @@ const options = {
 app.use(cors(options));
 app.use(helmet());
 
-// app.get('/', (req, res) => {
-//   res.send('Homepage view');
-// });
-
 routerApi(app);
 
 // Using custom middlewares

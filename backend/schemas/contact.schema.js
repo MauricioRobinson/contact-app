@@ -12,6 +12,7 @@ const getContactSchema = Joi.object({
 
 const createContactSchema = Joi.object({
   firstName: firstName.required(),
+  lastName: lastName.required(),
   email: email.required(),
   phoneNumber: phoneNumber.required(),
 });
