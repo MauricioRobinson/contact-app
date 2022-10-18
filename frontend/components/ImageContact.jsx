@@ -9,6 +9,7 @@ const ImageContact = (props) => {
         alt={props.imageAlt}
         layout='fill'
         objectFit='cover'
+        priority
       />
     </div>
   )
