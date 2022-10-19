@@ -5,8 +5,16 @@ const { models } = require('./../libs/sequelize');
 class ContactServices {
   constructor() {}
 
-  async findAll() {
-    const allContacts = await models.Contact.findAll();
+  async findAll(query) {
+    const options = {};
+    const { limit, offset } = query;
+
+    if (limit && offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    const allContacts = await models.Contact.findAll(options);
     return allContacts;
   }
 

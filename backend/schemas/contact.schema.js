@@ -5,6 +5,8 @@ const firstName = Joi.string();
 const lastName = Joi.string();
 const email = Joi.string().email();
 const phoneNumber = Joi.string();
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const getContactSchema = Joi.object({
   id: id.required(),
@@ -24,8 +26,14 @@ const updateContactSchema = Joi.object({
   phoneNumber,
 });
 
+const queryContactSchema = Joi.object({
+  limit,
+  offset,
+});
+
 module.exports = {
   createContactSchema,
   getContactSchema,
   updateContactSchema,
+  queryContactSchema,
 };

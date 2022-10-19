@@ -9,17 +9,22 @@ const {
   getContactSchema,
   createContactSchema,
   updateContactSchema,
+  queryContactSchema,
 } = require('./../schemas/contact.schema');
 
-router.get('/', async (req, res, next) => {
-  try {
-    const contacts = await service.findAll();
+router.get(
+  '/',
+  validatorHandler(queryContactSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const contacts = await service.findAll(req.query);
 
-    res.status(200).json(contacts);
-  } catch (error) {
-    next(error);
+      res.status(200).json(contacts);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get(
   '/:id',
