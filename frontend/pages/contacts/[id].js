@@ -7,6 +7,10 @@ export default function ContactPage({ contact }) {
     <>
       <Head>
         <title>Contact App</title>
+        <meta
+          name='viewport'
+          content='initial-scale=1, width=device-width'
+        />
       </Head>
 
       <main>
