@@ -10,12 +10,13 @@ class ContactGenerator {
     for (let i = 0; i <= limit; i++) {
       this.contactsArray.push({
         id: faker.datatype.uuid(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        first_name: faker.name.firstName(),
+        last_name: faker.name.lastName(),
         email: faker.internet.email(),
-        phoneNumber: faker.phone.number().replace('.', '-').replace('x', ''),
-        createdAt: 'new Date()',
-        updatedAt: 'new Date()',
+        phone_number: faker.phone.number().replace('.', '-').replace('x', ''),
+        created_at: 'new Date()',
+        updated_at: 'new Date()',
+        user_id: '583b1c5a-4db5-48a6-b458-4a12abef8f0e',
       });
     }
   }

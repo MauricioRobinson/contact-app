@@ -5,6 +5,8 @@ const firstName = Joi.string();
 const lastName = Joi.string();
 const email = Joi.string().email();
 const password = Joi.string();
+const country = Joi.string();
+const age = Joi.number().integer();
 
 const getUserSchema = Joi.object({
   id: id.required(),
@@ -15,6 +17,8 @@ const createUserSchema = Joi.object({
   lastName: lastName.required(),
   email: email.required(),
   password: password.required(),
+  country: country.required(),
+  age: age.required(),
 });
 
 const updateUserSchema = Joi.object({
@@ -22,6 +26,8 @@ const updateUserSchema = Joi.object({
   lastName,
   email,
   password,
+  country,
+  age,
 });
 
 module.exports = {

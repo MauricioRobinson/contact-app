@@ -41,6 +41,14 @@ const UserSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  age: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   createdAt: {
     field: 'created_at',
     type: DataTypes.DATE,
@@ -62,7 +70,12 @@ const UserSchema = {
 };
 
 class User extends Model {
-  static associate() {}
+  static associate(models) {
+    this.hasMany(models.Contact, {
+      as: 'contacts',
+      foreignKey: 'userId',
+    });
+  }
 
   static config(sequelize) {
     return {

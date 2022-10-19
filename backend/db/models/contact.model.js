@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
+const { USER_TABLE } = require('./user.model');
 const CONTACT_TABLE = 'Contacts';
 
 const ContactSchema = {
@@ -60,10 +61,23 @@ const ContactSchema = {
       isDate: true,
     },
   },
+  userId: {
+    field: 'user_id',
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: USER_TABLE,
+      key: 'id',
+    },
+  },
 };
 
 class Contact extends Model {
-  static associate() {}
+  static associate(models) {
+    this.belongsTo(models.User, {
+      as: 'user',
+    });
+  }
 
   static config(sequelize) {
     return {
