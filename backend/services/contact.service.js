@@ -6,12 +6,26 @@ class ContactServices {
   constructor() {}
 
   async findAll(query) {
-    const options = {};
+    const options = {
+      where: {},
+    };
     const { limit, offset } = query;
 
     if (limit && offset) {
       options.limit = limit;
       options.offset = offset;
+    }
+
+    const { firstName, lastName, email } = query;
+
+    if (firstName) {
+      options.where.firstName = firstName;
+    }
+    if (lastName) {
+      options.where.lastName = lastName;
+    }
+    if (email) {
+      options.where.email = email;
     }
 
     const allContacts = await models.Contact.findAll(options);
