@@ -104,7 +104,7 @@ const Contact = ({ data }) => {
                   color='info'
                   type='submit'
                   endIcon={<Edit />}>
-                  Editar
+                  Edit
                 </Button>
               </div>
             </form>
@@ -114,18 +114,18 @@ const Contact = ({ data }) => {
     </Modal>
   );
 
-  const DeleteModal = (
-    <Modal
-      open={visible}
-      onClose={handleClose}>
-      <div className='w-full'>
-        <Button onClick={handleClose}>
-          <Close />
-        </Button>
-        <h4>Delete contact</h4>
-      </div>
-    </Modal>
-  );
+  // const DeleteModal = (
+  //   <Modal
+  //     open={visible}
+  //     onClose={handleClose}>
+  //     <div className='w-full'>
+  //       <Button onClick={handleClose}>
+  //         <Close />
+  //       </Button>
+  //       <h4>Delete</h4>
+  //     </div>
+  //   </Modal>
+  // );
 
   return (
     <section className='w-full h-screen flex justify-center items-center'>
@@ -151,13 +151,13 @@ const Contact = ({ data }) => {
                   color='success'
                   endIcon={<EditRounded />}
                   variant='outlined'>
-                  Edit contact
+                  Edit
                 </Button>
                 <Button
                   color='error'
                   variant='outlined'
                   endIcon={<DeleteRounded />}>
-                  Delete contact
+                  Delete
                 </Button>
               </div>
             </div>
