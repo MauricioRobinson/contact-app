@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const checkApiKey = require('./../middlewares/auth.handler');
 
 const UserService = require('./../services/user.service');
 const service = new UserService();
@@ -11,7 +12,7 @@ const {
   updateUserSchema,
 } = require('./../schemas/user.schema');
 
-router.get('/', async (req, res, next) => {
+router.get('/', checkApiKey, async (req, res, next) => {
   try {
     const users = await service.findAll();
 
