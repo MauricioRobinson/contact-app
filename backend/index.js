@@ -27,6 +27,7 @@ const options = {
 };
 app.use(cors(options));
 app.use(helmet());
+require('./utils/auth');
 
 routerApi(app);
 
