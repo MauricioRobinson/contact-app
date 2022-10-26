@@ -49,6 +49,14 @@ const UserSchema = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'user',
+    validate: {
+      is: /^[a-z]+$/i,
+    },
+  },
   createdAt: {
     field: 'created_at',
     type: DataTypes.DATE,
