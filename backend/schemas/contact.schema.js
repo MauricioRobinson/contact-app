@@ -5,6 +5,7 @@ const firstName = Joi.string();
 const lastName = Joi.string();
 const email = Joi.string().email();
 const phoneNumber = Joi.string();
+const userId = Joi.string().uuid();
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
 
@@ -17,6 +18,7 @@ const createContactSchema = Joi.object({
   lastName: lastName.required(),
   email: email.required(),
   phoneNumber: phoneNumber.required(),
+  userId: userId.required(),
 });
 
 const updateContactSchema = Joi.object({

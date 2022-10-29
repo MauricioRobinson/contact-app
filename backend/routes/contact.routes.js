@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 
 const ContactService = require('./../services/contact.service');
@@ -44,6 +45,7 @@ router.get(
 
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(createContactSchema, 'body'),
   async (req, res, next) => {
     try {
