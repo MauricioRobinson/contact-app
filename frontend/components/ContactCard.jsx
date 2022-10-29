@@ -10,7 +10,7 @@ const ContactCard = ({ data }) => {
         <div className='flex flex-col justify-center items-center'>
           <div className='md:shrink-0'>
             <ImageContact
-              imageUrl={'/img/avatar.png'}
+              imageUrl={'/img/avatar.webp'}
               alt={'Avatar image'}
             />
           </div>

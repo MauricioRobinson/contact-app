@@ -6,6 +6,7 @@ const ContactService = require('./../services/contact.service');
 const service = new ContactService();
 
 const validatorHandler = require('./../middlewares/validator.handler');
+const { checkRole } = require('./../middlewares/auth.handler');
 const {
   getContactSchema,
   createContactSchema,
@@ -45,7 +46,8 @@ router.get(
 
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
+  // checkRole('admin', 'user'),
   validatorHandler(createContactSchema, 'body'),
   async (req, res, next) => {
     try {

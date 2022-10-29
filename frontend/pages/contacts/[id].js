@@ -23,7 +23,7 @@ export default function ContactPage({ contact }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch('http:/localhost:8080/api/v1/contacts');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`);
   const contacts = await res.json();
 
   const paths = contacts.map((contact) => ({
@@ -37,7 +37,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http:/localhost:8080/api/v1/contacts/${params.id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API}/contacts/${params.id}`
+  );
   const contact = await res.json();
 
   return {
