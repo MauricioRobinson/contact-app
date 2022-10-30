@@ -1,10 +1,11 @@
 import { Close, DeleteRounded, Edit, EditRounded } from '@mui/icons-material';
 import { Button, Modal, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ContactInfo from './ContactInfo';
 import ImageContact from './ImageContact';
 
 const Contact = ({ data }) => {
+  const id = data.id;
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({
     firstName: data.firstName,
@@ -28,8 +29,28 @@ const Contact = ({ data }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    fetchData(id);
+  };
 
-    console.log(formData);
+  const fetchData = async (id) => {
+    let data = JSON.stringify(formData);
+
+    let requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    };
+
+    const response = await fetch(
+      `http://localhost:8080/api/v1/contacts/${id}`,
+      requestOptions
+    );
+
+    const result = await response.json();
+
+    console.log(result);
   };
 
   const EditModal = (
@@ -134,7 +155,7 @@ const Contact = ({ data }) => {
           <div className='flex flex-col justify-center items-center'>
             <div className='md:shrink-0'>
               <ImageContact
-                imageUrl={'/img/avatar.png'}
+                imageUrl={'/img/avatar.webp'}
                 alt={'Avatar image'}
               />
             </div>
