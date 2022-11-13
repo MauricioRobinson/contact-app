@@ -9,12 +9,12 @@ export const Contacts = ({ contactsList }) => {
     if (contactsList) {
       setTimeout(() => {
         setLoading(false);
-      }, 3000);
+      }, 2000);
     }
   }, [contactsList]);
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-20 gap-4 p-4">
+    <ul className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-20 gap-4 p-4 list-none">
       {loading ? (
         <SkeletonCard />
       ) : (
@@ -25,6 +25,6 @@ export const Contacts = ({ contactsList }) => {
           />
         ))
       )}
-    </section>
+    </ul>
   );
 };
