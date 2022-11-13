@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ContactInfo from "./ContactInfo";
-import ImageContact from "./ImageContact";
-import { SkeletonCard } from "./SkeletonCard";
+import ContactInfo from "@components/ContactInfo";
+import ImageContact from "@components/ImageContact";
+import { SkeletonCard } from "@components/SkeletonCard";
 
 const Contact = ({ data }) => {
   const id = data.id;
@@ -172,9 +172,15 @@ const Contact = ({ data }) => {
             contactEmail={data.email}
             contactPhoneNumber={data.phoneNumber}
           />
-          <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-4">
-            <button onClick={handleOpen}>Edit</button>
-            <button>Delete</button>
+          <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-4 font-semibold tracking-wider">
+            <button
+              className="bg-blue-500 px-4 py-1 rounded-md transition duration-300 ease-out hover:bg-blue-600 hover:ring hover:ring-offset hover:ring-offset-blue-500 hover:ring-blue-500"
+              onClick={handleOpen}>
+              Edit
+            </button>
+            <button className="bg-red-500 px-4 py-1 rounded-md transition duration-300 ease-out hover:bg-red-600 hover:ring hover:ring-offset hover:ring-offset-red-500 hover:ring-red-500">
+              Delete
+            </button>
           </div>
         </div>
       </div>

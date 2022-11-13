@@ -1,5 +1,5 @@
 import React from "react";
-import { Contacts } from "./Contacts";
+import { Contacts } from "@components/Contacts";
 
 const HomePage = ({ data }) => {
   return (

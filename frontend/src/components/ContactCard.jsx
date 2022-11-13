@@ -1,7 +1,7 @@
 import React from "react";
-import ContactCardButton from "./ContactCardButton";
-import ContactInfo from "./ContactInfo";
-import ImageContact from "./ImageContact";
+import ContactCardButton from "@components/ContactCardButton";
+import ContactInfo from "@components/ContactInfo";
+import ImageContact from "@components/ImageContact";
 
 const ContactCard = ({ data }) => {
   return (

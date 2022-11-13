@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ContactCard from "./ContactCard";
-import { SkeletonCard } from "./SkeletonCard";
+import ContactCard from "@components/ContactCard";
+import { SkeletonCard } from "@components/SkeletonCard";
 
 export const Contacts = ({ contactsList }) => {
   const [loading, setLoading] = useState(true);
