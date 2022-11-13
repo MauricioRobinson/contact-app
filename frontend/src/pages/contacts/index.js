@@ -13,18 +13,16 @@ export default function Index({ contacts }) {
         />
       </Head>
 
-      <main>
-        <section>
-          <HomePage data={contacts} />
-        </section>
-        <section className="fixed right-4 bottom-4">
-          <button className="w-16 h-16 bg-blue-600 flex justify-center items-center cursor-pointer p-2 transition duration-500 ease-in-out hover:bg-blue-700 hover:ring hover:ring-offset-1 hover:ring-offset-blue-600 text-2xl font-bold rounded-full ">
-            <span>
-              <PlusIcon className="w-8 h-8" />
-            </span>
-          </button>
-        </section>
-      </main>
+      <section>
+        <HomePage data={contacts} />
+      </section>
+      <section className="fixed right-4 bottom-4">
+        <button className="w-16 h-16 bg-blue-600 flex justify-center items-center cursor-pointer p-2 transition duration-500 ease-in-out hover:bg-blue-700 hover:ring hover:ring-offset-1 hover:ring-offset-blue-600 text-2xl font-bold rounded-full ">
+          <span>
+            <PlusIcon className="w-8 h-8" />
+          </span>
+        </button>
+      </section>
     </>
   );
 }

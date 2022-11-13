@@ -15,13 +15,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full max-h-20">
+    <nav className="w-full max-h-20 backdrop-blur-sm bg-white/5 z-50">
       <div className="flex justify-between items-center p-6">
         <Link href="/">
           <a>
             <div className="flex items-center">
-              <PhoneIcon className="w-8 h-8 text-blue-600" />
-              <span className="ml-4 text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600">
+              <PhoneIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
+              <span className="ml-4 text-lg md:text-xl lg:text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600">
                 Contact App
               </span>
             </div>
@@ -55,7 +55,7 @@ const Navbar = () => {
       </div>
 
       <ul
-        className={`md:hidden list-none font-semibold tracking-wide bg-slate-900 absolute top-20 right-0 rounded-bl-md p-6 transition duration-300 ease-in-out toggleMenu ${
+        className={`md:hidden list-none font-semibold tracking-wide absolute top-20 right-0 rounded-bl-md p-6 transition duration-300 ease-in-out backdrop-blur-lg bg-black/70 z-50 ${
           menu
             ? "animate__animated animate__bounceInDown"
             : "animate__animated animate__bounceOutUp"

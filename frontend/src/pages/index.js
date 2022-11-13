@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { Hero } from "@components/Hero";
+import { Stats } from "@components/Stats";
 
 export default function Index({ contacts }) {
   return (
@@ -10,6 +12,11 @@ export default function Index({ contacts }) {
           content="Nextjs Contact App"
         />
       </Head>
+
+      <main className="">
+        <Hero />
+        <Stats />
+      </main>
     </>
   );
 }
