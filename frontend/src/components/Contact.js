@@ -172,7 +172,7 @@ const Contact = ({ data }) => {
             contactEmail={data.email}
             contactPhoneNumber={data.phoneNumber}
           />
-          <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-4 font-semibold tracking-wider">
+          <div className="flex flex-col justify-center items-center gap-4 md:flex-row font-semibold tracking-wider">
             <button
               className="bg-blue-500 px-4 py-1 rounded-md transition duration-300 ease-out hover:bg-blue-600 hover:ring hover:ring-offset hover:ring-offset-blue-500 hover:ring-blue-500"
               onClick={handleOpen}>

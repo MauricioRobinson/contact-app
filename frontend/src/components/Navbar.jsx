@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { PhoneIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { menuData } from "@constants/menuData";
+import { Logo } from "@components/Logo";
 import { useRouter } from "next/router";
 
 const Navbar = () => {
@@ -17,16 +17,7 @@ const Navbar = () => {
   return (
     <nav className="w-full max-h-20 backdrop-blur-sm bg-white/5 z-50">
       <div className="flex justify-between items-center p-6">
-        <Link href="/">
-          <a>
-            <div className="flex items-center">
-              <PhoneIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
-              <span className="ml-4 text-lg md:text-xl lg:text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600">
-                Contact App
-              </span>
-            </div>
-          </a>
-        </Link>
+        <Logo />
         <ul className="hidden  list-none md:flex md:items-center font-semibold tracking-wide space-x-4">
           {menuData.map((item) => (
             <li

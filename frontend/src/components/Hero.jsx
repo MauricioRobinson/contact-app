@@ -18,7 +18,10 @@ const Hero = () => {
               <br />
               People
             </h1>
-            <CallToAction />
+            <CallToAction
+              text="Get started"
+              link="/contacts"
+            />
           </div>
           <div className="hidden md:block md:col-span-2 relative">
             <div className="relative w-full h-80">
