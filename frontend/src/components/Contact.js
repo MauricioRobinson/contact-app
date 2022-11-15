@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import ContactInfo from "@components/ContactInfo";
 import ImageContact from "@components/ImageContact";
 import { SkeletonCard } from "@components/SkeletonCard";
+import { Modal } from "@components/Modal";
+import { CloseModal } from "@components/CloseModal";
+import { EditContactForm } from "@components/EditContactForm";
 
 const Contact = ({ data }) => {
   const id = data.id;
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
+  const [modal, setModal] = useState(false);
   const [formData, setFormData] = useState({
     firstName: data.firstName,
     lastName: data.lastName,
@@ -21,7 +25,7 @@ const Contact = ({ data }) => {
   // }, []);
 
   // const handleClose = () => setVisible(false);
-  const handleOpen = () => setVisible(true);
+  const handleOpen = () => setModal(true);
 
   const handleChange = (ev) => {
     setFormData((prevData) => {
@@ -190,7 +194,10 @@ const Contact = ({ data }) => {
   return (
     <section className="w-full h-screen flex justify-center items-center">
       <div className="w-full px-2">{uniqueContact}</div>
-      {/* {EditModal} */}
+      <Modal mounted={modal}>
+        <CloseModal setModal={setModal} />
+        <EditContactForm data={data} />
+      </Modal>
     </section>
   );
 };

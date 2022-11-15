@@ -6,7 +6,7 @@ import { GetInTouch } from "@components/GetInTouch";
 import { TrackContacts } from "@components/TrackContacts";
 import { Footprint } from "@components/Footprint";
 
-export default function Index({ contacts }) {
+export default function Index() {
   return (
     <>
       <Head>

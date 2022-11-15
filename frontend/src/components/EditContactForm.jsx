@@ -5,16 +5,15 @@ import { Toast } from "@components/Toast";
 import { ToastMessage } from "@components/ToastMessage";
 import { CloseToast } from "@components/CloseToast";
 
-const AddContactForm = () => {
+const EditContactForm = ({ data }) => {
   const [send, setSend] = useState(false);
   const [sendError, setSendError] = useState(false);
   const [toast, setToast] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    userId: "09c5af94-46eb-4bc9-af03-23ac0ae2cb11",
+    firstName: data.firstName,
+    lastName: data.lastName,
+    phoneNumber: data.phoneNumber,
+    email: data.email,
   });
 
   const handleChange = (ev) => {
@@ -29,15 +28,15 @@ const AddContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetchData();
+    await fetchData(data.id);
   };
 
-  const fetchData = async () => {
+  const fetchData = async (id) => {
     try {
       setSend((prevState) => (prevState = true));
       const data = await JSON.stringify(formData);
       const reqOpt = {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,14 +44,15 @@ const AddContactForm = () => {
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/contacts`,
+        `${process.env.NEXT_PUBLIC_API}/contacts/${id}`,
         reqOpt
       );
 
       const result = await response.json();
       console.log("Result", result);
 
-      if (result.statusCode !== "201") {
+      if (result.statusCode === "400" || result.statusCode === "404") {
+        console.log("Inside the if");
         setToast((prevState) => (prevState = true));
         setSendError((prevState) => (prevState = true));
         setSend((prevState) => (prevState = false));
@@ -62,6 +62,8 @@ const AddContactForm = () => {
       setSend((prevState) => (prevState = false));
       setSendError((prevState) => (prevState = false));
       setToast((prevState) => (prevState = true));
+
+      console.log("Outside the if");
 
       return result;
     } catch (error) {
@@ -184,15 +186,15 @@ const AddContactForm = () => {
 
       <Toast open={toast}>
         <CloseToast setToast={setToast} />
-        {sendError ? (
+        {!sendError ? (
           <ToastMessage
-            success
-            message="Contact created successfully!"
+            error
+            message="Error while editing the contact"
           />
         ) : (
           <ToastMessage
-            error
-            message="Error while creating the contact"
+            success
+            message="Contact edited successfully!"
           />
         )}
       </Toast>
@@ -200,4 +202,4 @@ const AddContactForm = () => {
   );
 };
 
-export { AddContactForm };
+export { EditContactForm };

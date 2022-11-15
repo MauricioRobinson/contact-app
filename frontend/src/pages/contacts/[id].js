@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import Contact from "../../components/Contact";
+import Contact from "@components/Contact";
 import { useRouter } from "next/router";
-import { SkeletonCard } from "../../components/SkeletonCard";
+import { SkeletonCard } from "@components/SkeletonCard";
 
 export const getStaticPaths = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`);
@@ -61,9 +61,7 @@ export default function ContactPage({ contact }) {
       </Head>
 
       <main>
-        <section>
-          <Contact data={contact} />
-        </section>
+        <Contact data={contact} />
       </main>
     </>
   );
