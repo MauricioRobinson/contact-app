@@ -11,8 +11,8 @@ export const menuData = [
   },
   {
     id: 3,
-    text: "Signin",
-    url: "/signin",
+    text: "Login",
+    url: "/login",
   },
   {
     id: 4,

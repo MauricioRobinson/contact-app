@@ -1,8 +1,14 @@
 import Head from "next/head";
+import { useState } from "react";
 import { HomePage } from "@components/HomePage";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { AddContactButton } from "@components/AddContactButton";
+import { Modal } from "@components/Modal";
+import { CloseModal } from "@components/CloseModal";
+import { AddContactForm } from "@components/AddContactForm";
 
 export default function Index({ contacts }) {
+  const [modal, setModal] = useState(false);
+
   return (
     <>
       <Head>
@@ -13,16 +19,15 @@ export default function Index({ contacts }) {
         />
       </Head>
 
-      <section>
-        <HomePage data={contacts} />
-      </section>
-      <section className="fixed right-4 bottom-4">
-        <button className="w-16 h-16 bg-blue-600 flex justify-center items-center cursor-pointer p-2 transition duration-500 ease-in-out hover:bg-blue-700 hover:ring hover:ring-offset-1 hover:ring-offset-blue-600 text-2xl font-bold rounded-full ">
-          <span>
-            <PlusIcon className="w-8 h-8" />
-          </span>
-        </button>
-      </section>
+      <HomePage data={contacts} />
+      <AddContactButton
+        modal={modal}
+        setModal={setModal}
+      />
+      <Modal mounted={modal}>
+        <CloseModal setModal={setModal} />
+        <AddContactForm />
+      </Modal>
     </>
   );
 }
@@ -36,7 +41,7 @@ export async function getStaticProps() {
       props: {
         contacts,
       },
-      revalidate: 5 * 60,
+      revalidate: 60,
     };
   } catch (error) {
     return {
