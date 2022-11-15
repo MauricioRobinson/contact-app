@@ -24,6 +24,7 @@ export default function Index({ contacts }) {
         modal={modal}
         setModal={setModal}
       />
+
       <Modal mounted={modal}>
         <CloseModal setModal={setModal} />
         <AddContactForm />

@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import {
-  ExclamationTriangleIcon,
-  UserPlusIcon,
-} from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { Toast } from "@components/Toast";
+import { ToastMessage } from "@components/ToastMessage";
+import { CloseToast } from "@components/CloseToast";
 
 const AddContactForm = () => {
   const [send, setSend] = useState(false);
   const [sendError, setSendError] = useState(false);
+  const [toast, setToast] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
     email: "",
+    userId: "09c5af94-46eb-4bc9-af03-23ac0ae2cb11",
   });
 
   const handleChange = (ev) => {
@@ -51,11 +53,16 @@ const AddContactForm = () => {
       console.log("Result", result);
 
       if (result.statusCode !== "201") {
+        setToast((prevState) => (prevState = true));
         setSendError((prevState) => (prevState = true));
+        setSend((prevState) => (prevState = false));
+        return;
       }
 
       setSend((prevState) => (prevState = false));
       setSendError((prevState) => (prevState = false));
+      setToast((prevState) => (prevState = true));
+
       return result;
     } catch (error) {
       console.log("Error", error);
@@ -137,12 +144,6 @@ const AddContactForm = () => {
             <button
               type="submit"
               className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 px-4 py-1 font-bold mt-2">
-              {sendError ? (
-                <span>
-                  Sending error{" "}
-                  <ExclamationTriangleIcon className="text-red-500 w-4 h-4" />
-                </span>
-              ) : null}
               {send ? (
                 <span>Sending...</span>
               ) : (
@@ -180,6 +181,21 @@ const AddContactForm = () => {
           </div>
         </div>
       </div>
+
+      <Toast open={toast}>
+        <CloseToast setToast={setToast} />
+        {sendError ? (
+          <ToastMessage
+            success
+            message="Data sent successfully!"
+          />
+        ) : (
+          <ToastMessage
+            error
+            message="Error while sending the form data"
+          />
+        )}
+      </Toast>
     </section>
   );
 };
