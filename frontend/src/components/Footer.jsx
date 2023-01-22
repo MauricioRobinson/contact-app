@@ -8,11 +8,11 @@ const Footer = () => {
   const currentYear = date.getFullYear();
   return (
     <footer className="mt-20 p-4">
-      <div className="py-8 border-t border-t-slate-800 grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="flex items-center justify-center">
+      <div className="py-8 border-t border-t-slate-800 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="flex items-center justify-center col-span-2 md:col-span-1">
           <Logo />
         </div>
-        <div className="">
+        <div className="mx-auto">
           <h5>Naviagation</h5>
           <ul className="list-none">
             {menuData.map((item) => (
@@ -26,7 +26,7 @@ const Footer = () => {
             ))}
           </ul>
         </div>
-        <div className="">
+        <div className="mx-auto">
           <h5>Help</h5>
           <ul className="list-none">
             <li
@@ -43,7 +43,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="">
+        <div className="mx-auto">
           <h5>Contact</h5>
           <ul className="list-none">
             <li

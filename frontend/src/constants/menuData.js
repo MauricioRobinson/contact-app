@@ -16,7 +16,7 @@ export const menuData = [
   },
   {
     id: 4,
-    text: "Logout",
-    url: "/logout",
+    text: "Signup",
+    url: "/signup",
   },
 ];

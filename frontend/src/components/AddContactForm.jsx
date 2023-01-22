@@ -35,7 +35,7 @@ const AddContactForm = () => {
   const fetchData = async () => {
     try {
       setSend((prevState) => (prevState = true));
-      const data = await JSON.stringify(formData);
+      const data = JSON.stringify(formData);
       const reqOpt = {
         method: "POST",
         headers: {
@@ -50,9 +50,8 @@ const AddContactForm = () => {
       );
 
       const result = await response.json();
-      console.log("Result", result);
 
-      if (result.statusCode !== "201") {
+      if (!response.ok) {
         setToast((prevState) => (prevState = true));
         setSendError((prevState) => (prevState = true));
         setSend((prevState) => (prevState = false));

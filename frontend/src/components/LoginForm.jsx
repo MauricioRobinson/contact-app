@@ -1,6 +1,15 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { Toast } from "@components/Toast";
+import { ToastMessage } from "@components/ToastMessage";
+import { CloseToast } from "@components/CloseToast";
+import { Spinner } from "@components/Spinner";
 
 const LoginForm = () => {
+  const router = useRouter();
+  const [send, setSend] = useState(false); //Controlls sending state
+  const [sendError, setSendError] = useState(false); //Controlls the behavior of the toast message
+  const [toast, setToast] = useState(false); //Controlls the open and close of the toast
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -25,22 +34,38 @@ const LoginForm = () => {
   const fetchData = async () => {
     const data = await JSON.stringify(loginData);
 
-    const options = {
+    const reqOpt = {
       method: "POST",
       headers: {
-        "Content-Type": "appplication/json",
+        "Content-Type": "application/json",
       },
       body: data,
     };
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API}/auth/login`,
-      options
+      reqOpt
     );
 
-    console.log("Response", response);
+    const result = await response.json();
 
-    return response;
+    console.log("Response", response);
+    console.log("Result", result);
+
+    if (!response.ok) {
+      setSendError((prevState) => (prevState = true));
+      setSend((prevState) => (prevState = false));
+      return;
+    } else {
+      setSend((prevState) => (prevState = false));
+      setSendError((prevState) => (prevState = false));
+
+      setTimeout(() => {
+        router.push("/contacts");
+      }, 2000);
+
+      return result;
+    }
   };
 
   return (
@@ -86,14 +111,38 @@ const LoginForm = () => {
               <button
                 type="submit"
                 className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-2 hover:ring-offset-violet-600 px-4 py-1 font-bold mt-2">
-                <p className="w-full flex items-center justify-center gap-2">
-                  <span>Login</span>
-                </p>
+                {send ? (
+                  <p className="w-full flex items-center justify-center gap-2">
+                    <span>
+                      <Spinner className="w-5 h-5 animate-spin fill-white stroke-yellow-500 stroke-2" />{" "}
+                    </span>
+                    <span>Login...</span>
+                  </p>
+                ) : (
+                  <p className="w-full flex items-center justify-center gap-2">
+                    <span>Login</span>
+                  </p>
+                )}
               </button>
             </div>
           </form>
         </div>
       </div>
+
+      <Toast open={toast}>
+        <CloseToast setToast={setToast} />
+        {sendError ? (
+          <ToastMessage
+            error
+            message="Error while loggin"
+          />
+        ) : (
+          <ToastMessage
+            success
+            message="Logged in successfully!"
+          />
+        )}
+      </Toast>
     </section>
   );
 };
