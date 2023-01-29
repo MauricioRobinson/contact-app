@@ -9,6 +9,10 @@ const ContactCardButton = ({ id }) => {
       `${process.env.NEXT_PUBLIC_API}/contacts/${id}`
     );
 
+    if (response.statusText !== "OK") {
+      throw Error("We could not delete the contact");
+    }
+
     return response;
   };
 

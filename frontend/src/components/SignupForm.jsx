@@ -4,6 +4,10 @@ import { Toast } from "@components/Toast";
 import { ToastMessage } from "@components/ToastMessage";
 import { CloseToast } from "@components/CloseToast";
 import { Spinner } from "@components/Spinner";
+import axios from "axios";
+import useAuth from "@hooks/useAuth";
+import { useSignup } from "@hooks/useSignup";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -15,9 +19,10 @@ const SignupForm = () => {
     lastName: "",
     email: "",
     password: "",
-    country: "",
-    age: "",
   });
+  const { signup, error, isLoading } = useSignup();
+
+  const { user, dispatch } = useAuth();
 
   const handleChange = (e) => {
     setSignupData((prevState) => {
@@ -32,46 +37,49 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetchData();
+    await signup(signupData);
+    // await fetchData();
   };
 
   const fetchData = async () => {
     try {
-      setSend((prevState) => (prevState = true));
-      const data = JSON.stringify(signupData);
-
-      const reqOpt = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      };
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/users`,
-        reqOpt
+      // setSend(true);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/users/signup`,
+        signupData
       );
-      const result = await response.json();
 
-      setToast((prevState) => (prevState = true));
+      console.log(response);
 
-      if (!response.ok) {
-        setSendError((prevState) => (prevState = true));
-        setSend((prevState) => (prevState = false));
-        return;
-      } else {
-        setSend((prevState) => (prevState = false));
-        setSendError((prevState) => (prevState = false));
+      // setToast(true);
 
-        setTimeout(() => {
-          router.push("/login");
-        }, 2000);
+      // if (response.statusText !== "OK") {
+      //   setSendError(true);
+      //   setSend(false);
+      //   return response;
+      // }
 
-        return result;
-      }
+      // setSend(false);
+      // setSendError(false);
+
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          token: response.data.token,
+          username: response.data.user.email,
+        },
+      });
+
+      // const interval = setTimeout(() => {
+      //   router.push("/contacts");
+      // }, 2000);
+
+      // clearInterval(interval);
+      // router.push("/contacts");
+      // return response;
     } catch (error) {
       console.log("Error", error);
+      throw Error("Unable to signup");
     }
   };
 
@@ -146,43 +154,12 @@ const SignupForm = () => {
                 value={signupData.password}
               />
             </div>
-            <div className="">
-              <label
-                htmlFor="country"
-                className="sr-only">
-                Country
-              </label>
-              <input
-                type="text"
-                className="pl-2 rounded-lg w-full"
-                id="country"
-                name="country"
-                placeholder="Country"
-                onChange={handleChange}
-                value={signupData.country}
-              />
-            </div>
-            <div className="">
-              <label
-                htmlFor="age"
-                className="sr-only">
-                Age
-              </label>
-              <input
-                type="number"
-                className="pl-2 rounded-lg w-full"
-                id="age"
-                name="age"
-                placeholder="Age"
-                onChange={handleChange}
-                value={signupData.age}
-              />
-            </div>
             <div className="mx-auto md:col-span-2 md:mr-0 lg:col-span-4">
               <button
                 type="submit"
+                disabled={isLoading}
                 className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-2 hover:ring-offset-violet-600 px-4 py-1 font-bold mt-2">
-                {send ? (
+                {isLoading ? (
                   <p className="w-full flex items-center justify-center gap-2">
                     <span>
                       <Spinner className="w-5 h-5 animate-spin fill-white stroke-yellow-500 stroke-2" />{" "}
@@ -196,6 +173,14 @@ const SignupForm = () => {
                 )}
               </button>
             </div>
+            {error && (
+              <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
+                <p className="flex items-center gap-x-2">
+                  <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
+                  {error}
+                </p>
+              </div>
+            )}
           </form>
         </div>
       </div>

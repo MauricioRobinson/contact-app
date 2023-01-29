@@ -4,8 +4,10 @@ import Image from "next/image";
 import { Toast } from "@components/Toast";
 import { ToastMessage } from "@components/ToastMessage";
 import { CloseToast } from "@components/CloseToast";
+import axios from "axios";
+import { CloseModal } from "@components/CloseModal";
 
-const AddContactForm = () => {
+const AddContactForm = ({ setModal }) => {
   const [send, setSend] = useState(false);
   const [sendError, setSendError] = useState(false);
   const [toast, setToast] = useState(false);
@@ -34,42 +36,32 @@ const AddContactForm = () => {
 
   const fetchData = async () => {
     try {
-      setSend((prevState) => (prevState = true));
-      const data = JSON.stringify(formData);
-      const reqOpt = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      };
-
-      const response = await fetch(
+      setSend(true);
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/contacts`,
-        reqOpt
+        formData
       );
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        setToast((prevState) => (prevState = true));
-        setSendError((prevState) => (prevState = true));
-        setSend((prevState) => (prevState = false));
-        return;
+      if (response.statusText !== "OK") {
+        setToast(true);
+        setSendError(true);
+        setSend(false);
+        return response;
       }
 
       setSend((prevState) => (prevState = false));
       setSendError((prevState) => (prevState = false));
       setToast((prevState) => (prevState = true));
 
-      return result;
+      return response;
     } catch (error) {
       console.log("Error", error);
     }
   };
 
   return (
-    <section className="max-w-md  md:max-w-4xl bg-black/80 p-8 rounded-xl">
+    <section className="relative max-w-md  md:max-w-4xl bg-black/80 p-8 rounded-xl">
+      <CloseModal setModal={setModal} />
       <h1 className="text-center mb-8 text-2xl">Add contact info</h1>
       <div className="lg:grid lg:grid-cols-2 gap-2">
         <form

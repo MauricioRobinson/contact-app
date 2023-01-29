@@ -9,8 +9,8 @@ const CloseModal = ({ setModal }) => {
   return (
     <button
       onClick={HandleClose}
-      className="absolute top-4 right-4">
-      <XMarkIcon className="w-8 h-8 text-red-500 font-bold hover:text-red-600" />
+      className="absolute top-2 right-2">
+      <XMarkIcon className="w-6 h-6 text-red-500 font-bold hover:text-red-600" />
     </button>
   );
 };

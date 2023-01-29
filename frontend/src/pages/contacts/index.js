@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ContactPage } from "@components/ContactPage";
 import { AddContactButton } from "@components/AddContactButton";
 import { Modal } from "@components/Modal";
@@ -16,6 +16,10 @@ export default function Index({ fetchedContacts }) {
     dispatch({ type: "SET_CONTACTS", payload: fetchedContacts });
   }, [fetchedContacts, dispatch]);
 
+  const handleModal = useCallback(() => {
+    setModal((prevState) => !prevState);
+  }, []);
+
   return (
     <>
       <Head>
@@ -29,12 +33,11 @@ export default function Index({ fetchedContacts }) {
       <ContactPage />
       <AddContactButton
         modal={modal}
-        setModal={setModal}
+        setModal={handleModal}
       />
 
       <Modal mounted={modal}>
-        <CloseModal setModal={setModal} />
-        <AddContactForm />
+        <AddContactForm setModal={handleModal} />
       </Modal>
     </>
   );
