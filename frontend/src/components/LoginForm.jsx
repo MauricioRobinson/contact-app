@@ -4,6 +4,8 @@ import { Toast } from "@components/Toast";
 import { ToastMessage } from "@components/ToastMessage";
 import { CloseToast } from "@components/CloseToast";
 import { Spinner } from "@components/Spinner";
+import { useLogin } from "@hooks/useLogin";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -14,6 +16,8 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+
+  const { login, error, isLoading } = useLogin();
 
   const handleChange = (e) => {
     setLoginData((prevState) => {
@@ -28,7 +32,8 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetchData();
+    await login(loginData);
+    // await fetchData();
   };
 
   const fetchData = async () => {
@@ -110,8 +115,9 @@ const LoginForm = () => {
             <div className="mx-auto">
               <button
                 type="submit"
+                disabled={isLoading}
                 className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-2 hover:ring-offset-violet-600 px-4 py-1 font-bold mt-2">
-                {send ? (
+                {isLoading ? (
                   <p className="w-full flex items-center justify-center gap-2">
                     <span>
                       <Spinner className="w-5 h-5 animate-spin fill-white stroke-yellow-500 stroke-2" />{" "}
@@ -125,6 +131,14 @@ const LoginForm = () => {
                 )}
               </button>
             </div>
+            {error && (
+              <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
+                <p className="flex items-center gap-x-2">
+                  <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
+                  {error}
+                </p>
+              </div>
+            )}
           </form>
         </div>
       </div>
