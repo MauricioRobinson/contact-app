@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useAuth from "@hooks/useAuth";
-import axios from "axios";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
@@ -23,14 +22,6 @@ export const useSignup = () => {
     );
 
     const json = await response.json();
-
-    // const response = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_API}/users/signup`,
-    //   data
-    // );
-
-    console.log(response);
-    console.log(json);
 
     if (!response.ok) {
       setIsLoading(false);

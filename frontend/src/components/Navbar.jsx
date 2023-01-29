@@ -5,13 +5,19 @@ import Link from "next/link";
 import { menuData } from "@constants/menuData";
 import { Logo } from "@components/Logo";
 import { useRouter } from "next/router";
+import { useLogout } from "@hooks/useLogout";
 
 const Navbar = () => {
   const router = useRouter();
   const [menu, setMenu] = useState(false);
+  const { logout } = useLogout();
 
   const handleMenu = () => {
     setMenu((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -32,6 +38,13 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
+          <li>
+            <button
+              className="border-2 border-blue-600 cursor-pointer px-2 py-1 rounded transition duration-300 ease-out hover:bg-blue-600"
+              onClick={handleLogout}>
+              Logout
+            </button>
+          </li>
         </ul>
 
         <div className="md:hidden flex items-center justify-center relative">
@@ -64,6 +77,13 @@ const Navbar = () => {
             </Link>
           </li>
         ))}
+        <li>
+          <button
+            className="border-2 border-blue-600 cursor-pointer px-2 py-1 rounded transition duration-300 ease-out hover:bg-blue-600"
+            onClick={handleLogout}>
+            Logout
+          </button>
+        </li>
       </ul>
     </nav>
   );
