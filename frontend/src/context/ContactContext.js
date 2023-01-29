@@ -1,4 +1,4 @@
-import { createContext, React, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 export const ContactContext = createContext();
 
@@ -13,7 +13,7 @@ export const contactReducer = (state, action) => {
       return {
         contacts: payload,
       };
-    case "CRETAE_CONTACT":
+    case "CREATE_CONTACT":
       return {
         contacts: [payload, ...state.contacts],
       };

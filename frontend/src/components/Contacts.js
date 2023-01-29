@@ -11,12 +11,28 @@ export const Contacts = () => {
       {contacts === null ? (
         <SkeletonCard />
       ) : (
-        contacts.map((contact) => (
-          <ContactCard
-            key={contact._id}
-            data={contact}
-          />
-        ))
+        contacts.map(
+          ({
+            _id,
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            isFavorite,
+            createdAt,
+          }) => (
+            <ContactCard
+              key={_id}
+              id={_id}
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              phoneNumber={phoneNumber}
+              isFavorite={isFavorite}
+              createdAt={createdAt}
+            />
+          )
+        )
       )}
     </ul>
   );
