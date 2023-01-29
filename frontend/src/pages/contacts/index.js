@@ -1,13 +1,20 @@
 import Head from "next/head";
-import { useState } from "react";
-import { HomePage } from "@components/HomePage";
+import { useEffect, useState } from "react";
+import { ContactPage } from "@components/ContactPage";
 import { AddContactButton } from "@components/AddContactButton";
 import { Modal } from "@components/Modal";
 import { CloseModal } from "@components/CloseModal";
 import { AddContactForm } from "@components/AddContactForm";
+import { useContact } from "@hooks/useContact";
 
-export default function Index({ contacts }) {
+export default function Index({ fetchedContacts }) {
   const [modal, setModal] = useState(false);
+
+  const { contacts, dispatch } = useContact();
+
+  useEffect(() => {
+    dispatch({ type: "SET_CONTACTS", payload: fetchedContacts });
+  }, [fetchedContacts, dispatch]);
 
   return (
     <>
@@ -19,7 +26,7 @@ export default function Index({ contacts }) {
         />
       </Head>
 
-      <HomePage data={contacts} />
+      <ContactPage />
       <AddContactButton
         modal={modal}
         setModal={setModal}
@@ -33,20 +40,13 @@ export default function Index({ contacts }) {
   );
 }
 
-export async function getStaticProps() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`);
-    const contacts = await response.json();
+export async function getServerSideProps() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`);
+  const data = await response.json();
 
-    return {
-      props: {
-        contacts,
-      },
-      revalidate: 60,
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
+  return {
+    props: {
+      fetchedContacts: data,
+    },
+  };
 }
