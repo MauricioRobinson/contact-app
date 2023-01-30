@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Toast } from "@components/Toast";
 import { ToastMessage } from "@components/ToastMessage";
@@ -33,45 +33,46 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(loginData);
+
     // await fetchData();
   };
 
-  const fetchData = async () => {
-    const data = await JSON.stringify(loginData);
+  // const fetchData = async () => {
+  //   const data = await JSON.stringify(loginData);
 
-    const reqOpt = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: data,
-    };
+  //   const reqOpt = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: data,
+  //   };
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/auth/login`,
-      reqOpt
-    );
+  //   const response = await fetch(
+  //     `${process.env.NEXT_PUBLIC_API}/auth/login`,
+  //     reqOpt
+  //   );
 
-    const result = await response.json();
+  //   const result = await response.json();
 
-    console.log("Response", response);
-    console.log("Result", result);
+  //   console.log("Response", response);
+  //   console.log("Result", result);
 
-    if (!response.ok) {
-      setSendError((prevState) => (prevState = true));
-      setSend((prevState) => (prevState = false));
-      return;
-    } else {
-      setSend((prevState) => (prevState = false));
-      setSendError((prevState) => (prevState = false));
+  //   if (!response.ok) {
+  //     setSendError((prevState) => (prevState = true));
+  //     setSend((prevState) => (prevState = false));
+  //     return;
+  //   } else {
+  //     setSend((prevState) => (prevState = false));
+  //     setSendError((prevState) => (prevState = false));
 
-      setTimeout(() => {
-        router.push("/contacts");
-      }, 2000);
+  //     setTimeout(() => {
+  //       router.push("/contacts");
+  //     }, 2000);
 
-      return result;
-    }
-  };
+  //     return result;
+  //   }
+  // };
 
   return (
     <section className="px-4">

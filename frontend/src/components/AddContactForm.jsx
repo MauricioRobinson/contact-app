@@ -4,8 +4,9 @@ import Image from "next/image";
 import { Toast } from "@components/Toast";
 import { ToastMessage } from "@components/ToastMessage";
 import { CloseToast } from "@components/CloseToast";
-import axios from "axios";
 import { CloseModal } from "@components/CloseModal";
+import { getCookie } from "cookies-next";
+import { useContact } from "@hooks/useContact";
 
 const AddContactForm = ({ setModal }) => {
   const [send, setSend] = useState(false);
@@ -16,8 +17,9 @@ const AddContactForm = ({ setModal }) => {
     lastName: "",
     phoneNumber: "",
     email: "",
-    userId: "09c5af94-46eb-4bc9-af03-23ac0ae2cb11",
   });
+
+  const { dispatch } = useContact();
 
   const handleChange = (ev) => {
     setFormData((prevState) => {
@@ -37,23 +39,28 @@ const AddContactForm = ({ setModal }) => {
   const fetchData = async () => {
     try {
       setSend(true);
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/contacts`,
-        formData
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+        body: JSON.stringify(formData),
+      });
+      const json = await response.json();
 
-      if (response.statusText !== "OK") {
+      if (!response.ok) {
         setToast(true);
         setSendError(true);
         setSend(false);
-        return response;
+        return;
       }
 
-      setSend((prevState) => (prevState = false));
-      setSendError((prevState) => (prevState = false));
-      setToast((prevState) => (prevState = true));
+      setSend(false);
+      setSendError(false);
+      setToast(true);
 
-      return response;
+      dispatch({ type: "CREATE_CONTACT", payload: json });
     } catch (error) {
       console.log("Error", error);
     }
@@ -175,7 +182,7 @@ const AddContactForm = ({ setModal }) => {
 
       <Toast open={toast}>
         <CloseToast setToast={setToast} />
-        {sendError ? (
+        {!sendError ? (
           <ToastMessage
             success
             message="Contact created successfully!"

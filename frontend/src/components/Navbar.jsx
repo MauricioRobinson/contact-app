@@ -6,7 +6,7 @@ import { menuData } from "@constants/menuData";
 import { Logo } from "@components/Logo";
 import { useRouter } from "next/router";
 import { useLogout } from "@hooks/useLogout";
-import useAuth from "@hooks/useAuth";
+import { useAuth } from "@hooks/useAuth";
 
 const Navbar = () => {
   const router = useRouter();

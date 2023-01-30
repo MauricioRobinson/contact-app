@@ -1,10 +1,13 @@
 import { useState } from "react";
-import useAuth from "@hooks/useAuth";
+import { useAuth } from "@hooks/useAuth";
+import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuth();
+  const router = useRouter();
 
   const login = async (data) => {
     setIsLoading(true);
@@ -34,6 +37,10 @@ export const useLogin = () => {
         })
       );
 
+      setCookie("token", json.token, {
+        maxAge: 60 * 60 * 8,
+      });
+
       //Updating the context
       dispatch({
         type: "LOGIN",
@@ -43,6 +50,8 @@ export const useLogin = () => {
         },
       });
       setIsLoading(false);
+
+      router.push("/contacts");
     }
   };
 

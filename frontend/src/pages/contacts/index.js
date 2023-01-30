@@ -3,14 +3,12 @@ import { useCallback, useEffect, useState } from "react";
 import { ContactPage } from "@components/ContactPage";
 import { AddContactButton } from "@components/AddContactButton";
 import { Modal } from "@components/Modal";
-import { CloseModal } from "@components/CloseModal";
 import { AddContactForm } from "@components/AddContactForm";
 import { useContact } from "@hooks/useContact";
 
 export default function Index({ fetchedContacts }) {
   const [modal, setModal] = useState(false);
-
-  const { contacts, dispatch } = useContact();
+  const { dispatch } = useContact();
 
   useEffect(() => {
     dispatch({ type: "SET_CONTACTS", payload: fetchedContacts });
@@ -43,9 +41,34 @@ export default function Index({ fetchedContacts }) {
   );
 }
 
-export async function getServerSideProps() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`);
+export async function getServerSideProps(ctx) {
+  const accessToken = ctx.req?.cookies["token"];
+
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
   const data = await response.json();
+
+  // if (!data) {
+  //   return {
+  //     redirect: {
+  //       destination: "/login",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: {

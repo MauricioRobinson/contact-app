@@ -1,19 +1,30 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import Link from "next/link";
 import React from "react";
+import { getCookie } from "cookies-next";
+import { useContact } from "@hooks/useContact";
 
 const ContactCardButton = ({ id }) => {
+  const { dispatch } = useContact();
+
   const handleDelete = async () => {
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API}/contacts/${id}`
+    const cookie = getCookie("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API}/contacts/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookie.toString()}`,
+        },
+      }
     );
 
-    if (response.statusText !== "OK") {
-      throw Error("We could not delete the contact");
-    }
+    const json = await response.json();
 
-    return response;
+    if (response.ok) {
+      dispatch({ type: "DELETE_CONTACT", payload: json });
+    }
   };
 
   return (
