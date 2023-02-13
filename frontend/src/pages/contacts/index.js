@@ -61,15 +61,6 @@ export async function getServerSideProps(ctx) {
 
   const data = await response.json();
 
-  // if (!data) {
-  //   return {
-  //     redirect: {
-  //       destination: "/login",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
   return {
     props: {
       fetchedContacts: data,

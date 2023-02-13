@@ -26,10 +26,11 @@ const Hero = () => {
           <div className="hidden md:block md:col-span-2 relative">
             <div className="relative w-full h-80">
               <Image
-                src={`/img/Checklist _Isometric.png`}
+                src={`https://res.cloudinary.com/waytraveltrek/image/upload/v1676313324/proyectos/contactApp/Checklist__Isometric_nz3ms5.png`}
                 alt="Hero"
                 layout="fill"
                 objectFit="contain"
+                priority
               />
             </div>
           </div>

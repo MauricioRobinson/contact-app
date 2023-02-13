@@ -14,7 +14,7 @@ const TrackContacts = () => {
         </div>
         <div className="relative w-full h-96 mx-auto">
           <Image
-            src="/img/Timeline_Monochromatic.png"
+            src="https://res.cloudinary.com/waytraveltrek/image/upload/v1676313387/proyectos/contactApp/Timeline_Monochromatic_acjyru.png"
             alt="Track contacts"
             layout="fill"
             objectFit="contain"

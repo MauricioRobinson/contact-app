@@ -21,7 +21,7 @@ const GetInTouch = () => {
               Save your contacts
             </h3>
             <Image
-              src={`/img/Personal_data_Isometric.png`}
+              src={`https://res.cloudinary.com/waytraveltrek/image/upload/v1676313358/proyectos/contactApp/Personal_data__Isometric_lms7om.png`}
               alt="Hero"
               layout="fill"
               objectFit="contain"

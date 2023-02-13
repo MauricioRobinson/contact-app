@@ -157,7 +157,7 @@ const AddContactForm = ({ setModal }) => {
             <div className="absolute top-0 bottom-0 left-0 right-0 w-32 max-h-full bg-gradient-to-bl from-yellow-600 to-blue-600 rounded-2xl cursor-pointer transition duration-500 ease-in-out translate-x-24 skew-x-[8deg] skew-y-[20deg] shadow-lg shadow-blue-600 z-[1]">
               <div className="relative w-full h-full flex items-center justify-center">
                 <Image
-                  src="/img/SEO_Monochromatic.png"
+                  src="https://res.cloudinary.com/waytraveltrek/image/upload/v1676314013/proyectos/contactApp/SEO_Monochromatic_q1ezdq.png"
                   alt="Create contact"
                   layout="fill"
                   objectFit="cover"
@@ -169,7 +169,7 @@ const AddContactForm = ({ setModal }) => {
                 transition duration-500 ease-in-out translate-x-44 skew-x-[8deg] skew-y-[20deg] shadow-lg hover:shadow-violet-600 hover:translate-x-56">
               <div className="relative w-full h-full">
                 <Image
-                  src="/img/Personal_data_Monochromatic.png"
+                  src="https://res.cloudinary.com/waytraveltrek/image/upload/v1676314028/proyectos/contactApp/Personal_data__Monochromatic_1_w1oesa.png"
                   alt="Create contact"
                   layout="fill"
                   objectFit="cover"
