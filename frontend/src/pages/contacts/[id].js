@@ -4,6 +4,11 @@ import Contact from "@components/Contact";
 import { useRouter } from "next/router";
 import { SkeletonCard } from "@components/SkeletonCard";
 
+/* FIXME: 
+Debo pasar correctamente el token al header. Pero antes debo resover el error 
+que lanza el compilador al acceder a getStaticPaths
+*/
+
 export const getStaticPaths = async (ctx) => {
   const accessToken = ctx.req?.cookies["token"];
 
