@@ -18,7 +18,7 @@ const Footprint = () => {
         <div className="hidden md:block md:col-span-2 border-l-2 border-green-600">
           <div className="relative w-full h-72">
             <Image
-              src="/img/Team building _Monochromatic.png"
+              src="https://res.cloudinary.com/waytraveltrek/image/upload/v1676313403/proyectos/contactApp/Team_building__Monochromatic_w0xe8x.png"
               alt="Build the future"
               layout="fill"
               objectFit="contain"
