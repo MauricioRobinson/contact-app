@@ -29,7 +29,7 @@ const Navbar = () => {
   // };
 
   return (
-    <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-sm border-b border-b-gray-900">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global">
@@ -89,14 +89,19 @@ const Navbar = () => {
               <div className="space-y-10 py-6">
                 <ul className="flex flex-col gap-y-4">
                   {navLinks &&
-                    navLinks?.map(({ id, url, label }: NavLinks) => (
+                    navLinks?.map(({ id, url, label }, index) => (
                       <li
                         key={id}
                         className={`${
                           pathname === url
                             ? "bg-gray-50 text-black"
                             : "text-white"
-                        } transition duration-300 ease-out -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-black hover:bg-gray-50 cursor-pointer`}>
+                        } transition duration-300 ease-out -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-black hover:bg-gray-50 cursor-pointer ${
+                          navLinks.length - 1 === index ||
+                          navLinks.length - 2 === index
+                            ? "hidden"
+                            : ""
+                        }`}>
                         <Link href={url}>{label}</Link>
                       </li>
                     ))}
@@ -107,6 +112,11 @@ const Navbar = () => {
                   href={"/login"}
                   className="transition duration-300 ease-out -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-black hover:bg-gray-50 cursor-pointer">
                   Login
+                </Link>
+                <Link
+                  href={"/signup"}
+                  className="transition duration-300 ease-out -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-black hover:bg-gray-50 cursor-pointer">
+                  Signup
                 </Link>
               </div>
             </div>

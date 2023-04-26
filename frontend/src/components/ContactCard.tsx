@@ -4,6 +4,16 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import { formatDistanceToNow } from "date-fns";
 ("date-fns");
 
+type IContact = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  isFavorite: boolean;
+  createdAt: string;
+};
+
 const ContactCard = ({
   id,
   firstName,
@@ -12,7 +22,7 @@ const ContactCard = ({
   phoneNumber,
   isFavorite,
   createdAt,
-}) => {
+}: IContact): JSX.Element => {
   return (
     <li className="w-full">
       <div className="relative max-w-sm md:max-w-lg bg-slate-800 shadow overflow-hidden rounded-xl mx-auto p-6">

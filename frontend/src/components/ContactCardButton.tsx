@@ -1,30 +1,29 @@
+"use client";
+
+import React, { MouseEventHandler } from "react";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import React from "react";
 import { getCookie } from "cookies-next";
-import { useContact } from "@/hooks/useContact";
+// import { useContact } from "@/hooks/useContact";
 
-const ContactCardButton = ({ id }) => {
-  const { dispatch } = useContact();
+type IDeleteContact = {
+  id: string;
+};
 
-  const handleDelete = async () => {
-    const cookie = getCookie("token");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/contacts/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookie.toString()}`,
-        },
-      }
-    );
+const ContactCardButton = ({ id }: IDeleteContact) => {
+  // const { dispatch } = useContact();
 
-    const json = await response.json();
+  const handleDelete: MouseEventHandler<HTMLButtonElement> = async () => {
+    // const cookie = getCookie("token");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${cookie.toString()}`,
+      },
+    });
 
-    if (response.ok) {
-      dispatch({ type: "DELETE_CONTACT", payload: json });
-    }
+    const json: Array<IDeleteContact> = await res.json();
   };
 
   return (
@@ -32,7 +31,7 @@ const ContactCardButton = ({ id }) => {
       <button
         disabled
         className="rounded-md cursor-not-allowed text-white bg-green-600 transition duration-300 ease-in-out hover:bg-green-700 px-4 py-2 font-bold mb-4 sm:mb-0">
-        See details
+        Edit contact
       </button>
 
       <button
