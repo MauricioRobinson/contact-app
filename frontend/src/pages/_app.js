@@ -1,8 +1,8 @@
-import "@styles/globals.css";
+import "../styles/globals.css";
 import "animate.css";
-import { Layout } from "@components/Layout";
-import { ContactProvider } from "@context/ContactContext";
-import { AuthProvider } from "@context/AuthContext";
+import { Layout } from "@/components/Layout";
+import { ContactProvider } from "@/context/ContactContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -17,4 +17,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-

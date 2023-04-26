@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { CallToAction } from "./CallToAction";
+import CallToAction from "./CallToAction";
 
 const Hero = () => {
   return (
@@ -28,9 +28,9 @@ const Hero = () => {
               <Image
                 src={`https://res.cloudinary.com/waytraveltrek/image/upload/v1676313324/proyectos/contactApp/Checklist__Isometric_nz3ms5.png`}
                 alt="Hero"
-                layout="fill"
-                objectFit="contain"
+                fill={true}
                 priority
+                className="object-contain"
               />
             </div>
           </div>

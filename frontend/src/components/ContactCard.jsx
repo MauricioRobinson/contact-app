@@ -1,5 +1,5 @@
 import React from "react";
-import ContactCardButton from "@components/ContactCardButton";
+import ContactCardButton from "@/components/ContactCardButton";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { formatDistanceToNow } from "date-fns";
 ("date-fns");

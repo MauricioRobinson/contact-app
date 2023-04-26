@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import Contact from "@components/Contact";
+import Contact from "@/components/Contact";
 import { useRouter } from "next/router";
-import { SkeletonCard } from "@components/SkeletonCard";
+import { SkeletonCard } from "@/components/SkeletonCard";
 
 /* FIXME: 
 Debo pasar correctamente el token al header. Pero antes debo resover el error 

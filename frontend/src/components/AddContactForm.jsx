@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { Toast } from "@components/Toast";
-import { ToastMessage } from "@components/ToastMessage";
-import { CloseToast } from "@components/CloseToast";
-import { CloseModal } from "@components/CloseModal";
+import { Toast } from "@/components/Toast";
+import { ToastMessage } from "@/components/ToastMessage";
+import { CloseToast } from "@/components/CloseToast";
+import { CloseModal } from "@/components/CloseModal";
 import { getCookie } from "cookies-next";
-import { useContact } from "@hooks/useContact";
+import { useContact } from "@/hooks/useContact";
 
 const AddContactForm = ({ setModal }) => {
   const [send, setSend] = useState(false);

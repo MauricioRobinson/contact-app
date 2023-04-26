@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAuth from "@hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 

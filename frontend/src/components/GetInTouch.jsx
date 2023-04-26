@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { CallToAction } from "@components/CallToAction";
+import { CallToAction } from "@/components/CallToAction";
 
 const GetInTouch = () => {
   return (

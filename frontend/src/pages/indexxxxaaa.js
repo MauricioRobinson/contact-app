@@ -1,10 +1,10 @@
 import Head from "next/head";
-import { Hero } from "@components/Hero";
-import { Stats } from "@components/Stats";
-import { SectionTitle } from "@components/SectionTitle";
-import { GetInTouch } from "@components/GetInTouch";
-import { TrackContacts } from "@components/TrackContacts";
-import { Footprint } from "@components/Footprint";
+import { Hero } from "@/components/Hero";
+import { Stats } from "@/components/Stats";
+import { SectionTitle } from "@/components/SectionTitle";
+import { GetInTouch } from "@/components/GetInTouch";
+import { TrackContacts } from "@/components/TrackContacts";
+import { Footprint } from "@/components/Footprint";
 
 export default function Index() {
   return (
@@ -30,4 +30,3 @@ export default function Index() {
     </>
   );
 }
-

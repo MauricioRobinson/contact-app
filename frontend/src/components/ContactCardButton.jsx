@@ -2,7 +2,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React from "react";
 import { getCookie } from "cookies-next";
-import { useContact } from "@hooks/useContact";
+import { useContact } from "@/hooks/useContact";
 
 const ContactCardButton = ({ id }) => {
   const { dispatch } = useContact();

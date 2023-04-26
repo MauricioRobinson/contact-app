@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ImageContact from "@components/ImageContact";
-import { SkeletonCard } from "@components/SkeletonCard";
-import { Modal } from "@components/Modal";
-import { CloseModal } from "@components/CloseModal";
-import { EditContactForm } from "@components/EditContactForm";
+import ImageContact from "@/components/ImageContact";
+import { SkeletonCard } from "@/components/SkeletonCard";
+import { Modal } from "@/components/Modal";
+import { CloseModal } from "@/components/CloseModal";
+import { EditContactForm } from "@/components/EditContactForm";
 import ContactCard from "./ContactCard";
 
 const Contact = ({ data }) => {

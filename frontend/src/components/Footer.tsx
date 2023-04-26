@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
-import { Logo } from "@components/Logo";
-import { menuData } from "@constants/menuData";
+import { Logo } from "@/components/Logo";
+import { navLinks } from "@/constants/menuData";
 import Link from "next/link";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   const date = new Date();
   const currentYear = date.getFullYear();
   return (
@@ -15,13 +17,11 @@ const Footer = () => {
         <div className="mx-auto">
           <h5>Naviagation</h5>
           <ul className="list-none">
-            {menuData.map((item) => (
+            {navLinks.map(({ id, label, url }) => (
               <li
-                key={item.id}
+                key={id}
                 className={`cursor-pointer px-2 py-1 text-slate-500 text-sm hover:text-slate-300`}>
-                <Link href={item.url}>
-                  <a>{item.text}</a>
-                </Link>
+                <Link href={url}>{label}</Link>
               </li>
             ))}
           </ul>
@@ -48,7 +48,7 @@ const Footer = () => {
           <ul className="list-none">
             <li
               className={`cursor-pointer px-2 py-1 text-slate-500 text-sm hover:text-slate-300`}>
-              Fcebook
+              Facebook
             </li>
             <li
               className={`cursor-pointer px-2 py-1 text-slate-500 text-sm hover:text-slate-300`}>

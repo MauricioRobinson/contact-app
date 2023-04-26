@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Toast } from "@components/Toast";
-import { ToastMessage } from "@components/ToastMessage";
-import { CloseToast } from "@components/CloseToast";
-import { Spinner } from "@components/Spinner";
-import { useLogin } from "@hooks/useLogin";
+import { Toast } from "@/components/Toast";
+import { ToastMessage } from "@/components/ToastMessage";
+import { CloseToast } from "@/components/CloseToast";
+import { Spinner } from "@/components/Spinner";
+import { useLogin } from "@/hooks/useLogin";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const LoginForm = () => {

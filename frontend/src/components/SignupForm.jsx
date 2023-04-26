@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Toast } from "@components/Toast";
-import { ToastMessage } from "@components/ToastMessage";
-import { CloseToast } from "@components/CloseToast";
-import { Spinner } from "@components/Spinner";
+import { Toast } from "@/components/Toast";
+import { ToastMessage } from "@/components/ToastMessage";
+import { CloseToast } from "@/components/CloseToast";
+import { Spinner } from "@/components/Spinner";
 import axios from "axios";
-import useAuth from "@hooks/useAuth";
-import { useSignup } from "@hooks/useSignup";
+import useAuth from "@/hooks/useAuth";
+import { useSignup } from "@/hooks/useSignup";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 const SignupForm = () => {

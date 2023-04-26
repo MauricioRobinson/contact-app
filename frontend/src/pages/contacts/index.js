@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
-import { ContactPage } from "@components/ContactPage";
-import { AddContactButton } from "@components/AddContactButton";
-import { Modal } from "@components/Modal";
-import { AddContactForm } from "@components/AddContactForm";
-import { useContact } from "@hooks/useContact";
+import { ContactPage } from "@/components/ContactPage";
+import { AddContactButton } from "@/components/AddContactButton";
+import { Modal } from "@/components/Modal";
+import { AddContactForm } from "@/components/AddContactForm";
+import { useContact } from "@/hooks/useContact";
 
 export default function Index({ fetchedContacts }) {
   const [modal, setModal] = useState(false);

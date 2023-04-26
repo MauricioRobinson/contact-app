@@ -1,5 +1,5 @@
-import { useAuth } from "@hooks/useAuth";
-import { useContact } from "@hooks/useContact";
+import { useAuth } from "@/hooks/useAuth";
+import { useContact } from "@/hooks/useContact";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
 

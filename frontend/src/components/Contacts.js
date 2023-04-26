@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ContactCard from "@components/ContactCard";
-import { SkeletonCard } from "@components/SkeletonCard";
-import { useContact } from "@hooks/useContact";
+import ContactCard from "@/components/ContactCard";
+import { SkeletonCard } from "@/components/SkeletonCard";
+import { useContact } from "@/hooks/useContact";
 
 export const Contacts = () => {
   const { contacts, dispatch } = useContact();
