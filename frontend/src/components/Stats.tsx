@@ -5,7 +5,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
 
-const Stats = () => {
+const Stats = (): JSX.Element => {
   return (
     <section className="mt-10">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -38,4 +38,4 @@ const Stats = () => {
   );
 };
 
-export { Stats };
+export default Stats;

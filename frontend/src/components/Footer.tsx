@@ -63,7 +63,7 @@ const Footer = (): JSX.Element => {
       </div>
       <div className="text-center border-t border-t-slate-800">
         <p className="text-slate-400 text-xs mt-2">
-          &copy; {currentYear}. Contact App. All rights reserved
+          &copy; Mauricio Robinson {currentYear}. All rights reserved
         </p>
       </div>
     </footer>
