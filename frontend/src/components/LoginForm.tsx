@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useRouter } from "next/router";
-import { Toast } from "@/components/Toast";
-import { ToastMessage } from "@/components/ToastMessage";
-import { CloseToast } from "@/components/CloseToast";
+// import { Toast } from "@/components/Toast";
+// import { ToastMessage } from "@/components/ToastMessage";
+// import { CloseToast } from "@/components/CloseToast";
 import { Spinner } from "@/components/Spinner";
 import { useLogin } from "@/hooks/useLogin";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-const LoginForm = () => {
-  const router = useRouter();
-  const [send, setSend] = useState(false); //Controlls sending state
-  const [sendError, setSendError] = useState(false); //Controlls the behavior of the toast message
-  const [toast, setToast] = useState(false); //Controlls the open and close of the toast
-  const [loginData, setLoginData] = useState({
+type ILogin = {
+  email: string;
+  password: string;
+};
+
+const LoginForm = (): JSX.Element => {
+  // const router = useRouter();
+  // const [send, setSend] = useState(false); //Controlls sending state
+  // const [sendError, setSendError] = useState(false); //Controlls the behavior of the toast message
+  // const [toast, setToast] = useState(false); //Controlls the open and close of the toast
+  const [loginData, setLoginData] = useState<ILogin>({
     email: "",
     password: "",
   });
 
-  const { login, error, isLoading } = useLogin();
+  // const { login, error, isLoading } = useLogin();
 
-  const handleChange = (e) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setLoginData((prevState) => {
       const { name, type, value, checked } = e.target;
 
@@ -30,10 +37,11 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await login(loginData);
+    // await login(loginData);
 
+    console.log(loginData);
     // await fetchData();
   };
 
@@ -116,35 +124,23 @@ const LoginForm = () => {
             <div className="mx-auto">
               <button
                 type="submit"
-                disabled={isLoading}
                 className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-2 hover:ring-offset-violet-600 px-4 py-1 font-bold mt-2">
-                {isLoading ? (
-                  <p className="w-full flex items-center justify-center gap-2">
-                    <span>
-                      <Spinner className="w-5 h-5 animate-spin fill-white stroke-yellow-500 stroke-2" />{" "}
-                    </span>
-                    <span>Login...</span>
-                  </p>
-                ) : (
-                  <p className="w-full flex items-center justify-center gap-2">
-                    <span>Login</span>
-                  </p>
-                )}
+                Login
               </button>
             </div>
-            {error && (
+            {/* {error && (
               <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
                 <p className="flex items-center gap-x-2">
                   <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
                   {error}
                 </p>
               </div>
-            )}
+            )} */}
           </form>
         </div>
       </div>
 
-      <Toast open={toast}>
+      {/* <Toast open={toast}>
         <CloseToast setToast={setToast} />
         {sendError ? (
           <ToastMessage
@@ -157,7 +153,7 @@ const LoginForm = () => {
             message="Logged in successfully!"
           />
         )}
-      </Toast>
+      </Toast> */}
     </section>
   );
 };
