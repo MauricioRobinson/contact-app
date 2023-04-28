@@ -5,8 +5,7 @@ const Page = () => {
   return (
     <section className="my-20">
       <main className="max-w-screen-xl lg:max-w-screen-2xl px-8 mx-auto">
-        <h1 className="text-2xl font-semibold text-gray-600">Your contacts</h1>
-        {/* <Contacts /> */}
+        <Contacts />
       </main>
     </section>
   );

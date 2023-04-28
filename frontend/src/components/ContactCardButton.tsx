@@ -4,6 +4,7 @@ import React, { MouseEventHandler } from "react";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 // import { useContact } from "@/hooks/useContact";
 
 type IDeleteContact = {
@@ -31,16 +32,18 @@ const ContactCardButton = ({ id }: IDeleteContact) => {
       <button
         disabled
         className="rounded-md cursor-not-allowed text-white bg-green-600 transition duration-300 ease-in-out hover:bg-green-700 px-4 py-2 font-bold mb-4 sm:mb-0">
-        Edit contact
+        <p className="flex items-center gap-x-2">
+          <span>Edit</span> <PencilSquareIcon className="w-5 h-5" />
+        </p>
       </button>
 
       <button
         onClick={handleDelete}
-        className="flex items-center gap-x-2 rounded-md bg-red-500 font-bold px-4 py-2 transition duration-300 ease-in-out hover:bg-red-700">
-        <span>Delete</span>
-        <span>
+        className="rounded-md bg-red-500 font-bold px-4 py-2 transition duration-300 ease-in-out hover:bg-red-700">
+        <p className="flex items-center gap-x-2">
+          <span>Delete</span>
           <TrashIcon className="w-5 h-5" />
-        </span>
+        </p>
       </button>
     </div>
   );
