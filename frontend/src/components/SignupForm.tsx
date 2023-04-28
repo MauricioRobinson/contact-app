@@ -10,14 +10,13 @@ import axios from "axios";
 // import useAuth from "@/hooks/useAuth";
 import { useSignup } from "@/hooks/useSignup";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 type ISignup = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  age: number | null | undefined;
-  country: string | null | undefined;
 };
 
 const SignupForm = (): JSX.Element => {
@@ -30,8 +29,6 @@ const SignupForm = (): JSX.Element => {
     lastName: "",
     email: "",
     password: "",
-    country: null,
-    age: null,
   });
   // const { signup, error, isLoading } = useSignup();
 
@@ -100,82 +97,102 @@ const SignupForm = (): JSX.Element => {
   return (
     <section className="px-4">
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="bg-gradient-to-tl from-orange-600 to-violet-600 max-w-md md:max-w-2xl lg:max-w-4xl p-6 rounded-lg shadow-md shadow-white/10">
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="lg:col-span-2">
-              <label
-                htmlFor="firstName"
-                className="sr-only">
-                First name
-              </label>
-              <input
-                type="text"
-                className="pl-2 rounded-lg w-full"
-                id="firstName"
-                name="firstName"
-                placeholder="First name"
-                onChange={handleChange}
-                value={signupData.firstName}
-              />
-            </div>
-            <div className="lg:col-span-2">
-              <label
-                htmlFor="lastName"
-                className="sr-only">
-                Last name
-              </label>
-              <input
-                type="text"
-                className="pl-2 rounded-lg w-full"
-                id="lastName"
-                name="lastName"
-                placeholder="Last name"
-                onChange={handleChange}
-                value={signupData.lastName}
-              />
-            </div>
-            <div className="md:col-span-2 lg:col-span-3">
-              <label
-                htmlFor="email"
-                className="sr-only">
-                Email
-              </label>
-              <input
-                type="email"
-                className="pl-2 rounded-lg w-full"
-                id="email"
-                name="email"
-                placeholder="Email"
-                onChange={handleChange}
-                value={signupData.email}
-              />
-            </div>
-            <div className="">
-              <label
-                htmlFor="password"
-                className="sr-only">
-                Password
-              </label>
-              <input
-                type="password"
-                className="pl-2 rounded-lg w-full"
-                id="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleChange}
-                value={signupData.password}
-              />
-            </div>
-            <div className="mx-auto md:col-span-2 md:mr-0 lg:col-span-4">
-              <button
-                type="submit"
-                className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-2 hover:ring-offset-violet-600 px-4 py-1 font-bold mt-2">
+        <div className="w-full max-w-xs sm:max-w-lg lg:max-w-3xl bg-gradient-to-tl from-orange-600 to-violet-600 p-6 rounded-lg shadow-md shadow-white/10">
+          <section className="grid grid-cols-1 lg:grid-cols-2 p-8">
+            <article className="lg:border-r lg:border-r-gray-800">
+              <h2 className="text-xl font-semibold tracking-wide text-center">
                 Signup
-              </button>
-            </div>
-            {/* {error && (
+              </h2>
+              <figure className="relative w-full h-72 overflow-hidden">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/marsdev/image/upload/v1682552763/Projects/contact-app/User_interface_Flatline_h4rcg2.png"
+                  }
+                  alt="Login image"
+                  fill={true}
+                  className="object-contain"
+                />
+              </figure>
+            </article>
+            <section className="flex items-center justify-center pl-10">
+              <form
+                onSubmit={handleSubmit}
+                className="">
+                <article className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <article className="lg:col-span-1">
+                    <label
+                      htmlFor="firstName"
+                      className="sr-only">
+                      First name
+                    </label>
+                    <input
+                      type="text"
+                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First name"
+                      onChange={handleChange}
+                      value={signupData.firstName}
+                    />
+                  </article>
+                  <article className="lg:col-span-1">
+                    <label
+                      htmlFor="lastName"
+                      className="sr-only">
+                      Last name
+                    </label>
+                    <input
+                      type="text"
+                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last name"
+                      onChange={handleChange}
+                      value={signupData.lastName}
+                    />
+                  </article>
+                  <article className="lg:col-span-2">
+                    <label
+                      htmlFor="email"
+                      className="sr-only">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      onChange={handleChange}
+                      value={signupData.email}
+                    />
+                  </article>
+                  <article className="lg:col-span-2">
+                    <label
+                      htmlFor="password"
+                      className="sr-only">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      onChange={handleChange}
+                      value={signupData.password}
+                    />
+                  </article>
+                </article>
+                <div className="mx-auto flex items-center justify-center lg:justify-start mt-4">
+                  <button
+                    type="submit"
+                    aria-label="button"
+                    className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-1 hover:ring-offset-transparent px-4 py-2 font-bold mt-2">
+                    Signup
+                  </button>
+                </div>
+                {/* {error && (
               <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
                 <p className="flex items-center gap-x-2">
                   <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
@@ -183,7 +200,9 @@ const SignupForm = (): JSX.Element => {
                 </p>
               </div>
             )} */}
-          </form>
+              </form>
+            </section>
+          </section>
         </div>
       </div>
 

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { Spinner } from "@/components/Spinner";
 import { useLogin } from "@/hooks/useLogin";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 type ILogin = {
   email: string;
@@ -85,50 +86,67 @@ const LoginForm = (): JSX.Element => {
   return (
     <section className="px-4">
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="bg-gradient-to-tl from-orange-600 to-violet-600 max-w-md p-6 rounded-lg shadow-md shadow-white/10">
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 gap-4">
-            <div className="">
-              <label
-                htmlFor="email"
-                className="sr-only">
-                Email
-              </label>
-              <input
-                type="email"
-                className="pl-2 rounded-lg"
-                id="email"
-                name="email"
-                placeholder="Email"
-                onChange={handleChange}
-                value={loginData.email}
-              />
-            </div>
-            <div className="">
-              <label
-                htmlFor="password"
-                className="sr-only">
-                Password
-              </label>
-              <input
-                type="password"
-                className="pl-2 rounded-lg"
-                id="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleChange}
-                value={loginData.password}
-              />
-            </div>
-            <div className="mx-auto">
-              <button
-                type="submit"
-                className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-2 hover:ring-offset-violet-600 px-4 py-1 font-bold mt-2">
+        <div className="w-full max-w-xs sm:max-w-lg lg:max-w-3xl bg-gradient-to-tl from-orange-600 to-violet-600 p-6 rounded-lg shadow-md shadow-white/10">
+          <section className="grid grid-cols-1 lg:grid-cols-2 p-8">
+            <article className="lg:border-r lg:border-r-gray-800">
+              <h2 className="text-xl font-semibold tracking-wide text-center">
                 Login
-              </button>
-            </div>
-            {/* {error && (
+              </h2>
+              <figure className="relative w-full h-72 overflow-hidden">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/marsdev/image/upload/v1682552763/Projects/contact-app/User_interface_Flatline_h4rcg2.png"
+                  }
+                  alt="Login image"
+                  fill={true}
+                  className="object-contain"
+                />
+              </figure>
+            </article>
+            <section className="flex items-center justify-center">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4">
+                <article className="mx-auto">
+                  <label
+                    htmlFor="email"
+                    className="sr-only">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                    value={loginData.email}
+                  />
+                </article>
+                <article className="mx-auto">
+                  <label
+                    htmlFor="password"
+                    className="sr-only">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                    value={loginData.password}
+                  />
+                </article>
+                <div className="mx-auto flex items-center justify-center lg:justify-start">
+                  <button
+                    type="submit"
+                    className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-1 hover:ring-offset-transparent px-4 py-2 font-bold mt-2">
+                    Login
+                  </button>
+                </div>
+                {/* {error && (
               <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
                 <p className="flex items-center gap-x-2">
                   <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
@@ -136,7 +154,9 @@ const LoginForm = (): JSX.Element => {
                 </p>
               </div>
             )} */}
-          </form>
+              </form>
+            </section>
+          </section>
         </div>
       </div>
 
