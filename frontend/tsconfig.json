@@ -27,6 +27,7 @@
       "@/constants/*": ["./src/constants/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/context/*": ["./src/context/*"],
+      "@/themes/*": ["./src/themes/*"],
       "@/providers/*": ["./src/providers/*"]
     }
   },

@@ -9,10 +9,18 @@ import { Spinner } from "@/components/Spinner";
 import { useLogin } from "@/hooks/useLogin";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Divider,
+} from "@chakra-ui/react";
+import Link from "next/link";
 
-type ILogin = {
-  email: string;
-  password: string;
+type Login = {
+  email: string | undefined;
+  password: string | undefined;
 };
 
 const LoginForm = (): JSX.Element => {
@@ -20,7 +28,7 @@ const LoginForm = (): JSX.Element => {
   // const [send, setSend] = useState(false); //Controlls sending state
   // const [sendError, setSendError] = useState(false); //Controlls the behavior of the toast message
   // const [toast, setToast] = useState(false); //Controlls the open and close of the toast
-  const [loginData, setLoginData] = useState<ILogin>({
+  const [loginData, setLoginData] = useState<Login>({
     email: "",
     password: "",
   });
@@ -86,7 +94,7 @@ const LoginForm = (): JSX.Element => {
   return (
     <section className="px-4">
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="w-full max-w-xs sm:max-w-lg lg:max-w-3xl bg-gradient-to-tl from-orange-600 to-violet-600 p-6 rounded-lg shadow-md shadow-white/10">
+        <div className="w-full max-w-xs sm:max-w-lg lg:max-w-3xl bg-gradient-to-tl from-gray-800 to-gray-700 p-6 rounded-lg shadow-md shadow-white/10">
           <section className="grid grid-cols-1 lg:grid-cols-2 p-8">
             <article className="lg:border-r lg:border-r-gray-800">
               <h2 className="text-xl font-semibold tracking-wide text-center">
@@ -103,58 +111,55 @@ const LoginForm = (): JSX.Element => {
                 />
               </figure>
             </article>
-            <section className="flex items-center justify-center">
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-4">
-                <article className="mx-auto">
-                  <label
-                    htmlFor="email"
-                    className="sr-only">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                    value={loginData.email}
-                  />
-                </article>
-                <article className="mx-auto">
-                  <label
-                    htmlFor="password"
-                    className="sr-only">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    value={loginData.password}
-                  />
-                </article>
-                <div className="mx-auto flex items-center justify-center lg:justify-start">
-                  <button
+            <section className="lg:pl-16">
+              <section className="flex flex-col items-center justify-center">
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-4">
+                  <FormControl isRequired>
+                    <FormLabel mb={"0"}>Email</FormLabel>
+                    <Input
+                      type="email"
+                      name="email"
+                      pl={"2"}
+                      value={loginData.email}
+                      onChange={handleChange}
+                      variant={"flushed"}
+                      focusBorderColor={"lime"}
+                    />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel mb={"0"}>Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="password"
+                      pl={"2"}
+                      value={loginData.password}
+                      onChange={handleChange}
+                      variant={"flushed"}
+                      focusBorderColor={"lime"}
+                    />
+                  </FormControl>
+                  <Button
                     type="submit"
-                    className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-1 hover:ring-offset-transparent px-4 py-2 font-bold mt-2">
+                    size={"lg"}
+                    variant={"outline"}
+                    colorScheme={"whatsapp"}>
                     Login
-                  </button>
-                </div>
-                {/* {error && (
-              <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
-                <p className="flex items-center gap-x-2">
-                  <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
-                  {error}
-                </p>
-              </div>
-            )} */}
-              </form>
+                  </Button>
+                </form>
+
+                <article className="mt-10">
+                  <small>
+                    You do not have an account?{" "}
+                    <Link
+                      className="text-green-500 font-semibold transition duration-300 ease-out hover:text-green-600"
+                      href={"/signup"}>
+                      Create account
+                    </Link>{" "}
+                  </small>
+                </article>
+              </section>
             </section>
           </section>
         </div>

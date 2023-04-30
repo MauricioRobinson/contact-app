@@ -11,6 +11,14 @@ import axios from "axios";
 import { useSignup } from "@/hooks/useSignup";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Divider,
+} from "@chakra-ui/react";
+import Link from "next/link";
 
 type ISignup = {
   firstName: string;
@@ -60,7 +68,7 @@ const SignupForm = (): JSX.Element => {
         signupData
       );
 
-      console.log(response);
+      // console.log(response);
 
       // setToast(true);
 
@@ -97,7 +105,7 @@ const SignupForm = (): JSX.Element => {
   return (
     <section className="px-4">
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="w-full max-w-xs sm:max-w-lg lg:max-w-3xl bg-gradient-to-tl from-orange-600 to-violet-600 p-6 rounded-lg shadow-md shadow-white/10">
+        <div className="w-full max-w-xs sm:max-w-lg lg:max-w-3xl bg-gradient-to-tl from-gray-800 to-gray-700 p-6 rounded-lg shadow-md shadow-white/10">
           <section className="grid grid-cols-1 lg:grid-cols-2 p-8">
             <article className="lg:border-r lg:border-r-gray-800">
               <h2 className="text-xl font-semibold tracking-wide text-center">
@@ -114,112 +122,85 @@ const SignupForm = (): JSX.Element => {
                 />
               </figure>
             </article>
-            <section className="flex items-center justify-center pl-10">
+            <section className="flex flex-col items-center justify-center pl-10">
               <form
                 onSubmit={handleSubmit}
                 className="">
                 <article className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <article className="lg:col-span-1">
-                    <label
-                      htmlFor="firstName"
-                      className="sr-only">
-                      First name
-                    </label>
-                    <input
-                      type="text"
-                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
-                      id="firstName"
+                  <FormControl isRequired>
+                    <FormLabel mb={"0"}>First name</FormLabel>
+                    <Input
                       name="firstName"
-                      placeholder="First name"
-                      onChange={handleChange}
+                      pl={"2"}
                       value={signupData.firstName}
+                      onChange={handleChange}
+                      variant={"flushed"}
+                      focusBorderColor={"lime"}
                     />
-                  </article>
-                  <article className="lg:col-span-1">
-                    <label
-                      htmlFor="lastName"
-                      className="sr-only">
-                      Last name
-                    </label>
-                    <input
-                      type="text"
-                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
-                      id="lastName"
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel mb={"0"}>Last name</FormLabel>
+                    <Input
                       name="lastName"
-                      placeholder="Last name"
-                      onChange={handleChange}
+                      pl={"2"}
                       value={signupData.lastName}
+                      onChange={handleChange}
+                      variant={"flushed"}
+                      focusBorderColor={"lime"}
                     />
-                  </article>
-                  <article className="lg:col-span-2">
-                    <label
-                      htmlFor="email"
-                      className="sr-only">
-                      Email
-                    </label>
-                    <input
+                  </FormControl>
+                  <FormControl
+                    className="lg:col-span-2"
+                    isRequired>
+                    <FormLabel mb={"0"}>Email</FormLabel>
+                    <Input
                       type="email"
-                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
-                      id="email"
                       name="email"
-                      placeholder="Email"
-                      onChange={handleChange}
+                      pl={"2"}
                       value={signupData.email}
-                    />
-                  </article>
-                  <article className="lg:col-span-2">
-                    <label
-                      htmlFor="password"
-                      className="sr-only">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="pl-2 rounded-lg outline-none focus:bg-gray-200 text-black h-10 w-full"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
                       onChange={handleChange}
-                      value={signupData.password}
+                      variant={"flushed"}
+                      focusBorderColor={"lime"}
                     />
-                  </article>
-                </article>
-                <div className="mx-auto flex items-center justify-center lg:justify-start mt-4">
-                  <button
+                  </FormControl>
+                  <FormControl
+                    className="lg:col-span-2"
+                    isRequired>
+                    <FormLabel mb={"0"}>Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="password"
+                      pl={"2"}
+                      value={signupData.password}
+                      onChange={handleChange}
+                      variant={"flushed"}
+                      focusBorderColor={"lime"}
+                    />
+                  </FormControl>
+                  <Button
                     type="submit"
-                    aria-label="button"
-                    className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 hover:ring hover:ring-green-600 hover:ring-offset-1 hover:ring-offset-transparent px-4 py-2 font-bold mt-2">
+                    size={"lg"}
+                    variant={"outline"}
+                    colorScheme={"whatsapp"}>
                     Signup
-                  </button>
-                </div>
-                {/* {error && (
-              <div className="mx-auto border rounded-md px-4 py-2 bg-red-400">
-                <p className="flex items-center gap-x-2">
-                  <ExclamationTriangleIcon className="text-red-600 w-5 h-5" />{" "}
-                  {error}
-                </p>
-              </div>
-            )} */}
+                  </Button>
+                </article>
               </form>
+
+              <article className="mt-10">
+                <small>
+                  You alredy have an account?{" "}
+                  <Link
+                    className="text-green-500 font-semibold transition duration-300 ease-out hover:text-green-600"
+                    href={"/login"}>
+                    Login
+                  </Link>{" "}
+                </small>
+              </article>
             </section>
           </section>
         </div>
       </div>
-
-      {/* <Toast open={toast}>
-        <CloseToast setToast={setToast} />
-        {sendError ? (
-          <ToastMessage
-            error
-            message="Error while creating the account"
-          />
-        ) : (
-          <ToastMessage
-            success
-            message="Account created successfully!"
-          />
-        )}
-      </Toast> */}
     </section>
   );
 };
