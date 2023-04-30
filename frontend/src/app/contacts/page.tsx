@@ -1,10 +1,16 @@
+import { AddContactButton } from "@/components/AddContactButton";
 import Contacts from "@/components/Contacts";
+import SearchBar from "@/components/SearchBar";
 import React from "react";
 
 const Page = () => {
   return (
-    <section className="my-20">
-      <main className="max-w-screen-xl lg:max-w-screen-2xl px-8 mx-auto">
+    <section className="relative h-full">
+      <AddContactButton />
+      <section className="flex items-center justify-between px-8 mt-10">
+        <SearchBar />
+      </section>
+      <main className="max-w-screen-xl lg:max-w-screen-2xl mx-auto">
         <Contacts />
       </main>
     </section>

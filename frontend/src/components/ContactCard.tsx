@@ -24,7 +24,7 @@ const ContactCard = ({
   createdAt,
 }: IContact): JSX.Element => {
   return (
-    <article className="relative max-w-sm md:max-w-lg bg-slate-800 shadow overflow-hidden rounded-xl mx-auto p-6">
+    <article className="relative w-full max-w-sm md:max-w-lg bg-slate-800 shadow overflow-hidden rounded-xl mx-auto p-6">
       <div className="flex flex-col justify-center items-center">
         <div className="md:shrink-0 bg-gray-600 w-20 h-20 flex items-center justify-center rounded-full">
           <div className="text-4xl fot-semibold flex gap-x-1">
