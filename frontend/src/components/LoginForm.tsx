@@ -1,7 +1,8 @@
 "use client";
 
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 // import { Toast } from "@/components/Toast";
 // import { ToastMessage } from "@/components/ToastMessage";
 // import { CloseToast } from "@/components/CloseToast";
@@ -17,6 +18,8 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { setCookie } from "cookies-next";
+import axios from "axios";
 
 type Login = {
   email: string | undefined;
@@ -32,6 +35,8 @@ const LoginForm = (): JSX.Element => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   // const { login, error, isLoading } = useLogin();
 
@@ -50,46 +55,25 @@ const LoginForm = (): JSX.Element => {
     e.preventDefault();
     // await login(loginData);
 
-    console.log(loginData);
-    // await fetchData();
+    await fetchData(loginData);
   };
 
-  // const fetchData = async () => {
-  //   const data = await JSON.stringify(loginData);
+  const fetchData = async (data: Login) => {
+    setLoading(true);
 
-  //   const reqOpt = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: data,
-  //   };
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API}/users/login`,
+      data
+    );
 
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API}/auth/login`,
-  //     reqOpt
-  //   );
-
-  //   const result = await response.json();
-
-  //   console.log("Response", response);
-  //   console.log("Result", result);
-
-  //   if (!response.ok) {
-  //     setSendError((prevState) => (prevState = true));
-  //     setSend((prevState) => (prevState = false));
-  //     return;
-  //   } else {
-  //     setSend((prevState) => (prevState = false));
-  //     setSendError((prevState) => (prevState = false));
-
-  //     setTimeout(() => {
-  //       router.push("/contacts");
-  //     }, 2000);
-
-  //     return result;
-  //   }
-  // };
+    if (response.status == 201) {
+      setCookie("token", response.data.token, {
+        maxAge: 60 * 60,
+      });
+      router.replace("/contacts");
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="px-4">
@@ -141,6 +125,7 @@ const LoginForm = (): JSX.Element => {
                     />
                   </FormControl>
                   <Button
+                    isLoading={loading ? true : false}
                     type="submit"
                     size={"lg"}
                     variant={"outline"}

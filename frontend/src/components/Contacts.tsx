@@ -1,8 +1,11 @@
 import React from "react";
 import ContactCard from "@/components/ContactCard";
 // import { useContact } from "@/hooks/useContact";
+import { cookies } from "next/headers";
+import axios from "axios";
+import { redirect } from "next/navigation";
 
-interface IContact {
+interface Contact {
   _id: string;
   firstName: string;
   lastName: string;
@@ -14,12 +17,30 @@ interface IContact {
 
 const Contacts = async () => {
   // const { contacts, dispatch } = useContact();
+  const cookieStorage = cookies();
+  const cookieToken = cookieStorage.get("token");
 
-  // const contacts = await axios.get(`${process.env.NEXT_PUBLIC_API}/contacts`);
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
-    cache: "no-store",
+  console.log(cookieToken);
+
+  if (!cookieToken) {
+    redirect("/login");
+  }
+
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/contacts`, {
+    headers: {
+      Authorization: `Bearer ${cookieToken.value}`,
+    },
   });
-  const contacts: Array<IContact> = await res.json();
+
+  const contacts: Contact[] = response.data;
+
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
+  //   headers: {
+  //     Authorization: `Bearer ${cookieToken.value}`,
+  //   },
+  //   cache: "no-store",
+  // });
+  // const contacts: Array<IContact> = await res.json();
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-20 gap-4 p-4 list-none">

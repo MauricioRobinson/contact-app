@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/router";
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { Toast } from "@/components/Toast";
 import { ToastMessage } from "@/components/ToastMessage";
@@ -19,12 +18,14 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { setCookie } from "cookies-next";
+import { redirect, useRouter } from "next/navigation";
 
 type ISignup = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  firstName: string | undefined;
+  lastName: string | undefined;
+  email: string | undefined;
+  password: string | undefined;
 };
 
 const SignupForm = (): JSX.Element => {
@@ -38,6 +39,8 @@ const SignupForm = (): JSX.Element => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
   // const { signup, error, isLoading } = useSignup();
 
   // const { user, dispatch } = useAuth();
@@ -56,17 +59,26 @@ const SignupForm = (): JSX.Element => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     // await signup(signupData);
+    await fetchData();
     console.log(signupData);
-    // await fetchData();
   };
 
   const fetchData = async () => {
     try {
       // setSend(true);
-      const response = await axios.post(
+      setLoading(true);
+      const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/users/signup`,
         signupData
       );
+
+      if (res.status === 201) {
+        setLoading(false);
+        setCookie("auth-cookie", res.data.token, {
+          maxAge: 60 * 60,
+        });
+        router.replace("/contacts");
+      }
 
       // console.log(response);
 
@@ -178,6 +190,7 @@ const SignupForm = (): JSX.Element => {
                     />
                   </FormControl>
                   <Button
+                    isLoading={loading ? true : false}
                     type="submit"
                     size={"lg"}
                     variant={"outline"}
@@ -189,7 +202,7 @@ const SignupForm = (): JSX.Element => {
 
               <article className="mt-10">
                 <small>
-                  You alredy have an account?{" "}
+                  You already have an account?{" "}
                   <Link
                     className="text-green-500 font-semibold transition duration-300 ease-out hover:text-green-600"
                     href={"/login"}>

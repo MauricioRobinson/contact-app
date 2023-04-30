@@ -3,6 +3,11 @@ import Contacts from "@/components/Contacts";
 import SearchBar from "@/components/SearchBar";
 import React from "react";
 
+interface Cookie {
+  name: string;
+  value: string;
+}
+
 const Page = () => {
   return (
     <section className="relative h-full">
