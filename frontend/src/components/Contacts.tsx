@@ -20,8 +20,6 @@ const Contacts = async () => {
   const cookieStorage = cookies();
   const cookieToken = cookieStorage.get("token");
 
-  console.log(cookieToken);
-
   if (!cookieToken) {
     redirect("/login");
   }

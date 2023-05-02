@@ -1,25 +1,13 @@
 "use client";
 
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { Toast } from "@/components/Toast";
-import { ToastMessage } from "@/components/ToastMessage";
-import { CloseToast } from "@/components/CloseToast";
-import { Spinner } from "@/components/Spinner";
 import axios from "axios";
 // import useAuth from "@/hooks/useAuth";
-import { useSignup } from "@/hooks/useSignup";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Divider,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { setCookie } from "cookies-next";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type ISignup = {
   firstName: string | undefined;
@@ -29,10 +17,6 @@ type ISignup = {
 };
 
 const SignupForm = (): JSX.Element => {
-  // const router = useRouter();
-  // const [send, setSend] = useState(false); //Controlls sending state
-  // const [sendError, setSendError] = useState(false); //Controlls the behavior of the toast message
-  // const [toast, setToast] = useState(false); //Controlls the open and close of the toast
   const [signupData, setSignupData] = useState<ISignup>({
     firstName: "",
     lastName: "",
@@ -41,9 +25,6 @@ const SignupForm = (): JSX.Element => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  // const { signup, error, isLoading } = useSignup();
-
-  // const { user, dispatch } = useAuth();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSignupData((prevState) => {
@@ -58,7 +39,6 @@ const SignupForm = (): JSX.Element => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    // await signup(signupData);
     await fetchData();
     console.log(signupData);
   };
@@ -79,35 +59,6 @@ const SignupForm = (): JSX.Element => {
         });
         router.replace("/contacts");
       }
-
-      // console.log(response);
-
-      // setToast(true);
-
-      // if (response.statusText !== "OK") {
-      //   setSendError(true);
-      //   setSend(false);
-      //   return response;
-      // }
-
-      // setSend(false);
-      // setSendError(false);
-
-      // dispatch({
-      //   type: "LOGIN",
-      //   payload: {
-      //     token: response.data.token,
-      //     username: response.data.user.email,
-      //   },
-      // });
-
-      // const interval = setTimeout(() => {
-      //   router.push("/contacts");
-      // }, 2000);
-
-      // clearInterval(interval);
-      // router.push("/contacts");
-      // return response;
     } catch (error) {
       console.log("Error", error);
       throw Error("Unable to signup");

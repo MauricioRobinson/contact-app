@@ -1,31 +1,67 @@
 "use client";
 
-import React, { useState } from "react";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
-import { Toast } from "@/components/Toast";
-import { ToastMessage } from "@/components/ToastMessage";
-import { CloseToast } from "@/components/CloseToast";
-import { CloseModal } from "@/components/CloseModal";
+import React, {
+  ChangeEventHandler,
+  FormEventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
+import axios from "axios";
 import { getCookie } from "cookies-next";
-import { useContact } from "@/hooks/useContact";
+import {
+  Input,
+  FormControl,
+  Button,
+  FormLabel,
+  Checkbox,
+  useToast,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
-const AddContactForm = ({ setModal }) => {
-  const [send, setSend] = useState(false);
-  const [sendError, setSendError] = useState(false);
-  const [toast, setToast] = useState(false);
-  const [formData, setFormData] = useState({
+interface Contact {
+  firstName: string | undefined;
+  lastName: string | undefined;
+  phoneNumber: string | undefined;
+  email: string | undefined;
+  isFavorite: boolean;
+}
+
+// interface Toast {
+//   title: string;
+//   description: string;
+
+//   status: string;
+//   isClosable: boolean;
+//   variant: string;
+//   position: string;
+// }
+
+const AddContactForm = () => {
+  const [loading, setLoading] = useState<boolean | undefined>(undefined);
+  const [isError, setIsError] = useState<boolean | undefined>(undefined);
+  const [toastInfo, setToastInfo] = useState({
+    title: "",
+    description: "",
+    status: "success",
+    isClosable: true,
+    variant: "top-accent",
+    position: "top",
+  });
+  const [formData, setFormData] = useState<Contact>({
     firstName: "",
     lastName: "",
     phoneNumber: "",
     email: "",
+    isFavorite: false,
   });
 
-  const { dispatch } = useContact();
+  const cookieToken = getCookie("token");
+  const router = useRouter();
+  const toast = useToast();
 
-  const handleChange = (ev) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setFormData((prevState) => {
-      const { name, type, checked, value } = ev.target;
+      const { name, type, checked, value } = e.target;
       return {
         ...prevState,
         [name]: type === "checkbox" ? checked : value,
@@ -33,169 +69,154 @@ const AddContactForm = ({ setModal }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await fetchData();
+
+    await fetchData(formData);
+
+    handleToast(isError);
   };
 
-  const fetchData = async () => {
+  const handleToast = (error: boolean | undefined) => {
+    !error
+      ? toast({
+          title: "Contact Created",
+          description: `${formData.firstName} has been created`,
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+          variant: "solid",
+          status: "success",
+        })
+      : toast({
+          title: "Error",
+          description: `Unexpected error while creating the contact. Please try again later!`,
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+          variant: "solid",
+          status: "error",
+        });
+  };
+
+  const fetchData = async (data: Contact) => {
     try {
-      setSend(true);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getCookie("token")}`,
-        },
-        body: JSON.stringify(formData),
-      });
-      const json = await response.json();
+      setLoading(true);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/contacts`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${cookieToken}`,
+          },
+        }
+      );
 
-      if (!response.ok) {
-        setToast(true);
-        setSendError(true);
-        setSend(false);
-        return;
+      if (response.status === 201) {
+        setLoading(false);
+        setIsError(false);
+        router.refresh();
+      } else {
+        setLoading(false);
+        setIsError(true);
+        router.refresh();
       }
-
-      setSend(false);
-      setSendError(false);
-      setToast(true);
-
-      dispatch({ type: "CREATE_CONTACT", payload: json });
     } catch (error) {
       console.log("Error", error);
     }
   };
 
   return (
-    <section className="relative max-w-md  md:max-w-4xl bg-black/80 p-8 rounded-xl">
-      <CloseModal setModal={setModal} />
-      <h1 className="text-center mb-8 text-2xl">Add contact info</h1>
-      <div className="lg:grid lg:grid-cols-2 gap-2">
+    <section className="p-8">
+      <div className="lg:grid gap-2">
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="md:col-span-2">
-            <label
-              className="sr-only"
-              htmlFor="firstName">
-              First name
-            </label>
-            <input
-              className="rounded-lg pl-2 w-full"
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="First name"
-              onChange={handleChange}
-              value={formData.firstName}
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label
-              className="sr-only"
-              htmlFor="lastName">
-              Last name
-            </label>
-            <input
-              className="rounded-lg pl-2 w-full"
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Last name"
-              onChange={handleChange}
-              value={formData.lastName}
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label
-              className="sr-only"
-              htmlFor="phoneNumber">
-              Phone number
-            </label>
-            <input
-              className="rounded-lg pl-2 w-full"
-              type="tel"
-              id="phoneNumber"
-              name="phoneNumber"
-              placeholder="Phone Number"
-              onChange={handleChange}
-              value={formData.phoneNumber}
-            />
-          </div>
-          <div className="md:col-span-4">
-            <label
-              className="sr-only"
-              htmlFor="email">
-              Email
-            </label>
-            <input
-              className="rounded-lg pl-2 w-full"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              value={formData.email}
-            />
-          </div>
-          <div className="lg:col-span-2 mx-auto lg:ml-0">
-            <button
-              type="submit"
-              className="rounded-md text-white bg-green-600 transition duration-500 ease-in-out hover:bg-green-700 px-4 py-1 font-bold mt-2">
-              {send ? (
-                <span>Sending...</span>
-              ) : (
-                <p className="w-full flex items-center justify-center gap-2">
-                  <span>Add contact</span> <UserPlusIcon className="w-4 h-4" />
-                </p>
-              )}
-            </button>
-          </div>
+          className="">
+          <article className="grid grid-cols-1 md:grid-cols-2 gap-4 place-items-center">
+            <FormControl
+              mb={"0"}
+              isRequired>
+              <FormLabel htmlFor="firstName">First name</FormLabel>
+              <Input
+                type="text"
+                id="firstName"
+                name="firstName"
+                pl={"2"}
+                variant={"flushed"}
+                focusBorderColor={"lime"}
+                onChange={handleChange}
+                value={formData.firstName}
+              />
+            </FormControl>
+            <FormControl
+              mb={"0"}
+              isRequired>
+              <FormLabel htmlFor="lastName">Last name</FormLabel>
+              <Input
+                type="text"
+                id="lastName"
+                name="lastName"
+                pl={"2"}
+                variant={"flushed"}
+                focusBorderColor={"lime"}
+                onChange={handleChange}
+                value={formData.lastName}
+              />
+            </FormControl>
+            <FormControl
+              className="md:col-span-2"
+              mb={"0"}
+              isRequired>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                pl={"2"}
+                variant={"flushed"}
+                focusBorderColor={"lime"}
+                onChange={handleChange}
+                value={formData.email}
+              />
+            </FormControl>
+            <FormControl
+              mb={"0"}
+              isRequired>
+              <FormLabel htmlFor="phoneNumber">Phone number</FormLabel>
+              <Input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                pl={"2"}
+                variant={"flushed"}
+                focusBorderColor={"lime"}
+                onChange={handleChange}
+                value={formData.phoneNumber}
+              />
+            </FormControl>
+            <FormControl
+              className="md:h-full md:flex md:items-end"
+              mb={"0"}>
+              <Checkbox
+                onChange={handleChange}
+                defaultChecked={formData.isFavorite ? true : false}
+                name="isFavorite">
+                Is Favorite?
+              </Checkbox>
+            </FormControl>
+            <div className="w-full flex items-center mt-8">
+              <Button
+                type="submit"
+                size={"lg"}
+                variant={"outline"}
+                colorScheme={"whatsapp"}
+                isLoading={loading ? true : false}>
+                Add Contact
+              </Button>
+            </div>
+          </article>
         </form>
-        <div className="hidden lg:block border-l-2 px-2">
-          <div className="relative w-full h-full">
-            <div className="absolute top-0 bottom-0 left-0 right-0 w-32 max-h-full bg-gradient-to-bl from-yellow-600 to-blue-600 rounded-2xl cursor-pointer transition duration-500 ease-in-out translate-x-24 skew-x-[8deg] skew-y-[20deg] shadow-lg shadow-blue-600 z-[1]">
-              <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src="https://res.cloudinary.com/waytraveltrek/image/upload/v1676314013/proyectos/contactApp/SEO_Monochromatic_q1ezdq.png"
-                  alt="Create contact"
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-            </div>
-            <div
-              className="absolute top-0 bottom-0 left-0 right-0 w-32 max-h-full bg-gradient-to-bl from-red-600 to-violet-600 rounded-2xl cursor-pointer 
-                transition duration-500 ease-in-out translate-x-44 skew-x-[8deg] skew-y-[20deg] shadow-lg hover:shadow-violet-600 hover:translate-x-56">
-              <div className="relative w-full h-full">
-                <Image
-                  src="https://res.cloudinary.com/waytraveltrek/image/upload/v1676314028/proyectos/contactApp/Personal_data__Monochromatic_1_w1oesa.png"
-                  alt="Create contact"
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-
-      <Toast open={toast}>
-        <CloseToast setToast={setToast} />
-        {!sendError ? (
-          <ToastMessage
-            success
-            message="Contact created successfully!"
-          />
-        ) : (
-          <ToastMessage
-            error
-            message="Error while creating the contact"
-          />
-        )}
-      </Toast>
     </section>
   );
 };

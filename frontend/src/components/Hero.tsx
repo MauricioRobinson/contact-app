@@ -9,8 +9,8 @@ const Hero = () => {
       className="w-full">
       <div className="p-4 text-center">
         <div className="bg-slate-800 h-96 rounded-lg flex items-center justify-center md:grid md:grid-cols-3 md:bg-transparent">
-          <div className="p-4 mx-auto">
-            <h1 className="uppercase font-bold text-2xl tracking-widest">
+          <div className="p-4 mx-auto md:flex md:flex-col md:items-center">
+            <h1 className="uppercase font-bold text-2xl md:text-4xl lg:text-6xl tracking-widest">
               Remember <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-green-500">
                 Your
