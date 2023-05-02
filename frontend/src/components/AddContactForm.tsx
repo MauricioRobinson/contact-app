@@ -26,27 +26,9 @@ interface Contact {
   isFavorite: boolean;
 }
 
-// interface Toast {
-//   title: string;
-//   description: string;
-
-//   status: string;
-//   isClosable: boolean;
-//   variant: string;
-//   position: string;
-// }
-
 const AddContactForm = () => {
   const [loading, setLoading] = useState<boolean | undefined>(undefined);
   const [isError, setIsError] = useState<boolean | undefined>(undefined);
-  const [toastInfo, setToastInfo] = useState({
-    title: "",
-    description: "",
-    status: "success",
-    isClosable: true,
-    variant: "top-accent",
-    position: "top",
-  });
   const [formData, setFormData] = useState<Contact>({
     firstName: "",
     lastName: "",

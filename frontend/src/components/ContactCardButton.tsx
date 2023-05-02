@@ -1,30 +1,70 @@
 "use client";
 
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler, useState } from "react";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-// import { useContact } from "@/hooks/useContact";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useToast } from "@chakra-ui/react";
 
-type IDeleteContact = {
+type IdContact = {
   id: string;
 };
 
-const ContactCardButton = ({ id }: IDeleteContact) => {
-  // const { dispatch } = useContact();
+const ContactCardButton = ({ id }: IdContact) => {
+  const [loading, setLoading] = useState<boolean | undefined>(undefined);
+  const [isError, setIsError] = useState<boolean | undefined>(undefined);
+  const router = useRouter();
+  const toast = useToast();
+
+  const handleDeleteContact = async (id: string) => {
+    const cookieToken = getCookie("token");
+
+    const res = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API}/contacts/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookieToken}`,
+        },
+      }
+    );
+
+    if (res.status === 200) {
+      setIsError(false);
+      router.refresh();
+    } else {
+      setIsError(true);
+      router.refresh();
+    }
+  };
+
+  const handleToast = (error: boolean | undefined) => {
+    !error
+      ? toast({
+          title: "Contact Deleted",
+          description: `Contact removed successfully!`,
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+          variant: "solid",
+          status: "success",
+        })
+      : toast({
+          title: "Error",
+          description: `Unexpected error while deleting the contact. Please try again later!`,
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+          variant: "solid",
+          status: "error",
+        });
+  };
 
   const handleDelete: MouseEventHandler<HTMLButtonElement> = async () => {
-    // const cookie = getCookie("token");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${cookie.toString()}`,
-      },
-    });
-
-    const json: Array<IDeleteContact> = await res.json();
+    await handleDeleteContact(id);
+    handleToast(isError);
   };
 
   return (
