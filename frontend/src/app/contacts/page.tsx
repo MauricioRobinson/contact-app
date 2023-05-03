@@ -16,6 +16,7 @@ const Page = () => {
         <SearchBar />
       </section>
       <main className="max-w-screen-xl lg:max-w-screen-2xl mx-auto">
+        {/* @ts-expect-error Server Componet */}
         <Contacts />
       </main>
     </section>

@@ -1,8 +1,6 @@
 import React from "react";
 import ContactCard from "@/components/ContactCard";
-// import { useContact } from "@/hooks/useContact";
 import { cookies } from "next/headers";
-import axios from "axios";
 import { redirect } from "next/navigation";
 
 interface Contact {
@@ -16,7 +14,6 @@ interface Contact {
 }
 
 const Contacts = async () => {
-  // const { contacts, dispatch } = useContact();
   const cookieStorage = cookies();
   const cookieToken = cookieStorage.get("token");
 
@@ -24,21 +21,16 @@ const Contacts = async () => {
     redirect("/login");
   }
 
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/contacts`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
     headers: {
       Authorization: `Bearer ${cookieToken.value}`,
     },
+    cache: "no-store",
   });
 
-  const contacts: Contact[] = response.data;
+  const contacts: Contact[] = await response.json();
 
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_API}/contacts`, {
-  //   headers: {
-  //     Authorization: `Bearer ${cookieToken.value}`,
-  //   },
-  //   cache: "no-store",
-  // });
-  // const contacts: Array<IContact> = await res.json();
+  // const contacts: Contact[] = response.data;
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-20 gap-4 p-4 list-none">
@@ -52,7 +44,7 @@ const Contacts = async () => {
             phoneNumber,
             isFavorite,
             createdAt,
-          }: IContact) => (
+          }: Contact) => (
             <ContactCard
               key={_id}
               id={_id}
