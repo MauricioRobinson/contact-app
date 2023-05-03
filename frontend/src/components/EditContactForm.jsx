@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { Toast } from "@components/Toast";
-import { ToastMessage } from "@components/ToastMessage";
-import { CloseToast } from "@components/CloseToast";
+import { Toast } from "@/components/Toast";
+import { ToastMessage } from "@/components/ToastMessage";
+import { CloseToast } from "@/components/CloseToast";
 
 const EditContactForm = ({ data }) => {
   const [send, setSend] = useState(false);

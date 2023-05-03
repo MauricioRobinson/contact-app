@@ -1,22 +1,22 @@
-export const menuData = [
+export const navLinks = [
   {
     id: 1,
-    text: "Home",
     url: "/",
+    label: "Home",
   },
   {
     id: 2,
-    text: "Contacts",
     url: "/contacts",
+    label: "My Contacts",
   },
-  {
-    id: 3,
-    text: "Login",
-    url: "/login",
-  },
-  {
-    id: 4,
-    text: "Signup",
-    url: "/signup",
-  },
+  // {
+  //   id: 3,
+  //   url: "/login",
+  //   label: "Login",
+  // },
+  // {
+  //   id: 4,
+  //   url: "/signup",
+  //   label: "Signup",
+  // },
 ];
