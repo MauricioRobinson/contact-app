@@ -1,18 +1,23 @@
+"use client";
+
 import { useAuth } from "@/hooks/useAuth";
-import { useContact } from "@/hooks/useContact";
 import { deleteCookie } from "cookies-next";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export const useLogout = () => {
   const router = useRouter();
   const { dispatch } = useAuth();
-  const { dispatch: contactsDispatch } = useContact();
 
   const logout = () => {
     localStorage.removeItem("user");
     deleteCookie("token");
-    dispatch({ type: "LOGOUT" });
-    contactsDispatch({ type: "SET_CONTACTS", payload: null });
+    dispatch({
+      type: "LOGOUT",
+      payload: {
+        token: undefined,
+        email: undefined,
+      },
+    });
 
     router.push("/login");
   };

@@ -8,8 +8,9 @@ import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { useSignup } from "@/hooks/useSignup";
 
-type ISignup = {
+type User = {
   firstName: string | undefined;
   lastName: string | undefined;
   email: string | undefined;
@@ -17,7 +18,7 @@ type ISignup = {
 };
 
 const SignupForm = (): JSX.Element => {
-  const [signupData, setSignupData] = useState<ISignup>({
+  const [signupData, setSignupData] = useState<User>({
     firstName: "",
     lastName: "",
     email: "",
@@ -25,6 +26,8 @@ const SignupForm = (): JSX.Element => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+
+  const { error, isLoading, signup } = useSignup();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSignupData((prevState) => {
@@ -39,30 +42,7 @@ const SignupForm = (): JSX.Element => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await fetchData();
-    console.log(signupData);
-  };
-
-  const fetchData = async () => {
-    try {
-      // setSend(true);
-      setLoading(true);
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/users/signup`,
-        signupData
-      );
-
-      if (res.status === 201) {
-        setLoading(false);
-        setCookie("auth-cookie", res.data.token, {
-          maxAge: 60 * 60,
-        });
-        router.replace("/contacts");
-      }
-    } catch (error) {
-      console.log("Error", error);
-      throw Error("Unable to signup");
-    }
+    await signup(signupData);
   };
 
   return (
@@ -85,7 +65,12 @@ const SignupForm = (): JSX.Element => {
                 />
               </figure>
             </article>
-            <section className="flex flex-col items-center justify-center pl-10">
+            <section className="flex flex-col items-center justify-center pl-10 gap-y-4">
+              {error ? (
+                <article className="bg-red-700 text-center p-4 rounded-lg">
+                  <p>{error.response.data.message}</p>
+                </article>
+              ) : null}
               <form
                 onSubmit={handleSubmit}
                 className="">
@@ -141,7 +126,7 @@ const SignupForm = (): JSX.Element => {
                     />
                   </FormControl>
                   <Button
-                    isLoading={loading ? true : false}
+                    isLoading={isLoading ? true : false}
                     type="submit"
                     size={"lg"}
                     variant={"outline"}

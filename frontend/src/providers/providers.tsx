@@ -3,6 +3,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { CacheProvider } from "@chakra-ui/next-js";
 import theme from "@/themes/theme";
+import { AuthProvider } from "@/context/AuthContext";
 
 const Providers = ({
   children,
@@ -11,7 +12,9 @@ const Providers = ({
 }): JSX.Element => {
   return (
     <CacheProvider>
-      <ChakraProvider theme={theme}>{children}</ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <AuthProvider>{children}</AuthProvider>
+      </ChakraProvider>
     </CacheProvider>
   );
 };

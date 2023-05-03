@@ -1,44 +1,23 @@
 "use client";
 
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
-// import { useRouter } from "next/router";
-import { useRouter } from "next/navigation";
-// import { Toast } from "@/components/Toast";
-// import { ToastMessage } from "@/components/ToastMessage";
-// import { CloseToast } from "@/components/CloseToast";
-import { Spinner } from "@/components/Spinner";
 import { useLogin } from "@/hooks/useLogin";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Divider,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import Link from "next/link";
-import { setCookie } from "cookies-next";
-import axios from "axios";
 
 type Login = {
-  email: string | undefined;
-  password: string | undefined;
+  email: string;
+  password: string;
 };
 
 const LoginForm = (): JSX.Element => {
-  // const router = useRouter();
-  // const [send, setSend] = useState(false); //Controlls sending state
-  // const [sendError, setSendError] = useState(false); //Controlls the behavior of the toast message
-  // const [toast, setToast] = useState(false); //Controlls the open and close of the toast
   const [loginData, setLoginData] = useState<Login>({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
 
-  // const { login, error, isLoading } = useLogin();
+  const { error, login, isLoading } = useLogin();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setLoginData((prevState) => {
@@ -53,26 +32,7 @@ const LoginForm = (): JSX.Element => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    // await login(loginData);
-
-    await fetchData(loginData);
-  };
-
-  const fetchData = async (data: Login) => {
-    setLoading(true);
-
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API}/users/login`,
-      data
-    );
-
-    if (response.status == 201) {
-      setCookie("token", response.data.token, {
-        maxAge: 60 * 60,
-      });
-      router.replace("/contacts");
-      setLoading(false);
-    }
+    await login(loginData);
   };
 
   return (
@@ -96,7 +56,12 @@ const LoginForm = (): JSX.Element => {
               </figure>
             </article>
             <section className="lg:pl-16">
-              <section className="flex flex-col items-center justify-center">
+              <section className="flex flex-col items-center justify-center gap-y-4">
+                {error ? (
+                  <article className="bg-red-700 text-center p-4 rounded-lg">
+                    <p>{error.response.data.message}</p>
+                  </article>
+                ) : null}
                 <form
                   onSubmit={handleSubmit}
                   className="space-y-4">
@@ -125,7 +90,7 @@ const LoginForm = (): JSX.Element => {
                     />
                   </FormControl>
                   <Button
-                    isLoading={loading ? true : false}
+                    isLoading={isLoading ? true : false}
                     type="submit"
                     size={"lg"}
                     variant={"outline"}
@@ -149,21 +114,6 @@ const LoginForm = (): JSX.Element => {
           </section>
         </div>
       </div>
-
-      {/* <Toast open={toast}>
-        <CloseToast setToast={setToast} />
-        {sendError ? (
-          <ToastMessage
-            error
-            message="Error while loggin"
-          />
-        ) : (
-          <ToastMessage
-            success
-            message="Logged in successfully!"
-          />
-        )}
-      </Toast> */}
     </section>
   );
 };
